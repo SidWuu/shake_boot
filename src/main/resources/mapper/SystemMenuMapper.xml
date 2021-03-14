@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sid.xk.shake.mapper.SystemMenuMapper">
+  <resultMap id="BaseResultMap" type="com.sid.xk.shake.model.SystemMenu">
+    <id column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="menu_path" jdbcType="VARCHAR" property="menuPath" />
+    <result column="menu_icon" jdbcType="VARCHAR" property="menuIcon" />
+    <result column="menu_parent" jdbcType="BIGINT" property="menuParent" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="menu_status" jdbcType="SMALLINT" property="menuStatus" />
+    <result column="is_del" jdbcType="SMALLINT" property="isDel" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.sid.xk.shake.model.SystemMenu">
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    menu_id, menu_code, menu_name, menu_path, menu_icon, menu_parent, sort, menu_status, 
+    is_del
+  </sql>
+  <sql id="Blob_Column_List">
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from system_menu
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from system_menu
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.sid.xk.shake.model.SystemMenu">
+    insert into system_menu (menu_id, menu_code, menu_name, 
+      menu_path, menu_icon, menu_parent, 
+      sort, menu_status, is_del, 
+      remark)
+    values (#{menuId,jdbcType=BIGINT}, #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, 
+      #{menuPath,jdbcType=VARCHAR}, #{menuIcon,jdbcType=VARCHAR}, #{menuParent,jdbcType=BIGINT}, 
+      #{sort,jdbcType=INTEGER}, #{menuStatus,jdbcType=SMALLINT}, #{isDel,jdbcType=SMALLINT}, 
+      #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sid.xk.shake.model.SystemMenu">
+    insert into system_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="menuCode != null">
+        menu_code,
+      </if>
+      <if test="menuName != null">
+        menu_name,
+      </if>
+      <if test="menuPath != null">
+        menu_path,
+      </if>
+      <if test="menuIcon != null">
+        menu_icon,
+      </if>
+      <if test="menuParent != null">
+        menu_parent,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="menuStatus != null">
+        menu_status,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="menuId != null">
+        #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="menuCode != null">
+        #{menuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuPath != null">
+        #{menuPath,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null">
+        #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParent != null">
+        #{menuParent,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="menuStatus != null">
+        #{menuStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sid.xk.shake.model.SystemMenu">
+    update system_menu
+    <set>
+      <if test="menuCode != null">
+        menu_code = #{menuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="menuName != null">
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuPath != null">
+        menu_path = #{menuPath,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null">
+        menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParent != null">
+        menu_parent = #{menuParent,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="menuStatus != null">
+        menu_status = #{menuStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.sid.xk.shake.model.SystemMenu">
+    update system_menu
+    set menu_code = #{menuCode,jdbcType=VARCHAR},
+      menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_path = #{menuPath,jdbcType=VARCHAR},
+      menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      menu_parent = #{menuParent,jdbcType=BIGINT},
+      sort = #{sort,jdbcType=INTEGER},
+      menu_status = #{menuStatus,jdbcType=SMALLINT},
+      is_del = #{isDel,jdbcType=SMALLINT},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sid.xk.shake.model.SystemMenu">
+    update system_menu
+    set menu_code = #{menuCode,jdbcType=VARCHAR},
+      menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_path = #{menuPath,jdbcType=VARCHAR},
+      menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      menu_parent = #{menuParent,jdbcType=BIGINT},
+      sort = #{sort,jdbcType=INTEGER},
+      menu_status = #{menuStatus,jdbcType=SMALLINT},
+      is_del = #{isDel,jdbcType=SMALLINT}
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </update>
+</mapper>
