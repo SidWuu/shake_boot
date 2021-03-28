@@ -25,9 +25,9 @@
         URL后加的参数可以减少报错，&连接需要做转义，SSL版本高需要声明-->
         <jdbcConnection
                 driverClass="com.mysql.cj.jdbc.Driver"
-                connectionURL="jdbc:mysql://192.168.31.144:49156/shake_db?characterEncoding=utf8"
+                connectionURL="jdbc:mysql://192.168.31.144:49980/shake_db?characterEncoding=utf8"
                 userId="root"
-                password="passw0rd31.144">
+                password="root1qaz2wsx">
         </jdbcConnection>
 
         <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
