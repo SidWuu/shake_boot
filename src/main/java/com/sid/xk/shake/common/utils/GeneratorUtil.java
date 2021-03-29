@@ -75,7 +75,7 @@ public class GeneratorUtil {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.sid.xk.shake.system");
+        pc.setParent("com.sid.xk.shake");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -139,8 +139,8 @@ public class GeneratorUtil {
 //        strategy.setSuperEntityClass("你自己的父类实体,没有就不用设置!");
         strategy.setEntityLombokModel(false);
         strategy.setRestControllerStyle(true);
-        // 公共父类
-//        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
+        // 公共父类, 没有就不用设置
+        strategy.setSuperControllerClass("BaseController");
         // 写于父类中的公共字段
         strategy.setSuperEntityColumns("id");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
