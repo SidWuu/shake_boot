@@ -1,7 +1,7 @@
 package com.sid.xk.shake.basic.warehouse.service;
 
-import com.sid.xk.shake.basic.warehouse.entity.Warehouse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sid.xk.shake.basic.warehouse.entity.BasicWarehouse;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author wuxiaodong
  * @since 2021-03-28
  */
-public interface IWarehouseService extends IService<Warehouse> {
+public interface IWarehouseService extends IService<BasicWarehouse> {
 
 }

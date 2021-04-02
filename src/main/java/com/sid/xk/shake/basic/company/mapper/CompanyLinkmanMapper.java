@@ -1,7 +1,7 @@
 package com.sid.xk.shake.basic.company.mapper;
 
-import com.sid.xk.shake.basic.company.entity.CompanyLinkman;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sid.xk.shake.basic.company.entity.BasicCompanyLinkman;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author wuxiaodong
  * @since 2021-03-28
  */
-public interface CompanyLinkmanMapper extends BaseMapper<CompanyLinkman> {
+public interface CompanyLinkmanMapper extends BaseMapper<BasicCompanyLinkman> {
 
 }

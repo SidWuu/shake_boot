@@ -1,6 +1,5 @@
 package com.sid.xk.shake.basic.company.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 
 /**
@@ -9,12 +8,16 @@ import java.io.Serializable;
  * </p>
  *
  * @author wuxiaodong
- * @since 2021-03-28
+ * @since 2021-04-02
  */
-@TableName("basic_company_linkman")
-public class CompanyLinkman implements Serializable {
+public class BasicCompanyLinkman implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 自增ID
+     */
+    private Long id;
 
     /**
      * 联系人代码
@@ -71,6 +74,13 @@ public class CompanyLinkman implements Serializable {
      */
     private String remark;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getLinkmanCode() {
         return linkmanCode;
     }
@@ -151,8 +161,9 @@ public class CompanyLinkman implements Serializable {
 
     @Override
     public String toString() {
-        return "CompanyLinkman{" +
-            "linkmanCode=" + linkmanCode +
+        return "BasicCompanyLinkman{" +
+            "id=" + id +
+            ", linkmanCode=" + linkmanCode +
             ", companyCode=" + companyCode +
             ", linkmanName=" + linkmanName +
             ", linkmanPhone=" + linkmanPhone +

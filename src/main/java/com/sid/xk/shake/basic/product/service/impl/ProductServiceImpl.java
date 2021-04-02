@@ -1,6 +1,6 @@
 package com.sid.xk.shake.basic.product.service.impl;
 
-import com.sid.xk.shake.basic.product.entity.Product;
+import com.sid.xk.shake.basic.product.entity.BasicProduct;
 import com.sid.xk.shake.basic.product.mapper.ProductMapper;
 import com.sid.xk.shake.basic.product.service.IProductService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-03-28
  */
 @Service
-public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements IProductService {
+public class ProductServiceImpl extends ServiceImpl<ProductMapper, BasicProduct> implements IProductService {
 
 }

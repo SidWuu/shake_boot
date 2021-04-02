@@ -1,7 +1,7 @@
 package com.sid.xk.shake.basic.company.service;
 
-import com.sid.xk.shake.basic.company.entity.CompanyLinkman;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sid.xk.shake.basic.company.entity.BasicCompanyLinkman;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author wuxiaodong
  * @since 2021-03-28
  */
-public interface ICompanyLinkmanService extends IService<CompanyLinkman> {
+public interface ICompanyLinkmanService extends IService<BasicCompanyLinkman> {
 
 }

@@ -1,7 +1,7 @@
 package com.sid.xk.shake.basic.product.mapper;
 
-import com.sid.xk.shake.basic.product.entity.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sid.xk.shake.basic.product.entity.BasicProduct;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author wuxiaodong
  * @since 2021-03-28
  */
-public interface ProductMapper extends BaseMapper<Product> {
+public interface ProductMapper extends BaseMapper<BasicProduct> {
 
 }

@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: springboot-shake
+  datasource:
+    #数据库相关配置, 局域网开发库明文就明文
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.31.144:49980/shake_db?characterEncoding=utf8
+    username: root
+    password: root1qaz2wsx
+
+server:
+  #访问端口
+  port: 8080
+  tomcat:
+    #编码格式
+    uri-encoding: utf-8
+  servlet:
+    session:
+      #session生命周期
+      timeout: 30m
+
+#MyBatis-plus
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+
+#MyBatis
+#mybatis:
+#  mapper-locations: classpath:mapper/**/*Mapper.xml
+#  type-aliases-package: com.sid.xk.shake.**.entity

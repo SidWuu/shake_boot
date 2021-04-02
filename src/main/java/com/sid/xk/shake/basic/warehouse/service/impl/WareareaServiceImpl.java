@@ -1,6 +1,6 @@
 package com.sid.xk.shake.basic.warehouse.service.impl;
 
-import com.sid.xk.shake.basic.warehouse.entity.Warearea;
+import com.sid.xk.shake.basic.warehouse.entity.BasicWarearea;
 import com.sid.xk.shake.basic.warehouse.mapper.WareareaMapper;
 import com.sid.xk.shake.basic.warehouse.service.IWareareaService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-03-28
  */
 @Service
-public class WareareaServiceImpl extends ServiceImpl<WareareaMapper, Warearea> implements IWareareaService {
+public class WareareaServiceImpl extends ServiceImpl<WareareaMapper, BasicWarearea> implements IWareareaService {
 
 }

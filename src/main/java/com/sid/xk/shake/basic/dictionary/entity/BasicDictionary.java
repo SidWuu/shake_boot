@@ -1,8 +1,7 @@
 package com.sid.xk.shake.basic.dictionary.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -10,12 +9,16 @@ import java.io.Serializable;
  * </p>
  *
  * @author wuxiaodong
- * @since 2021-03-28
+ * @since 2021-04-02
  */
-@TableName("basic_dictionary")
-public class Dictionary implements Serializable {
+public class BasicDictionary implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * ID
+     */
+    private Long id;
 
     /**
      * 类型
@@ -57,6 +60,13 @@ public class Dictionary implements Serializable {
      */
     private String remark;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getDataType() {
         return dataType;
     }
@@ -116,8 +126,9 @@ public class Dictionary implements Serializable {
 
     @Override
     public String toString() {
-        return "Dictionary{" +
-            "dataType=" + dataType +
+        return "BasicDictionary{" +
+            "id=" + id +
+            ", dataType=" + dataType +
             ", dataCode=" + dataCode +
             ", dataValue=" + dataValue +
             ", dataStatus=" + dataStatus +

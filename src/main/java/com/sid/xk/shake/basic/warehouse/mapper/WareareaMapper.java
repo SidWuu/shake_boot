@@ -1,7 +1,7 @@
 package com.sid.xk.shake.basic.warehouse.mapper;
 
-import com.sid.xk.shake.basic.warehouse.entity.Warearea;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sid.xk.shake.basic.warehouse.entity.BasicWarearea;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author wuxiaodong
  * @since 2021-03-28
  */
-public interface WareareaMapper extends BaseMapper<Warearea> {
+public interface WareareaMapper extends BaseMapper<BasicWarearea> {
 
 }

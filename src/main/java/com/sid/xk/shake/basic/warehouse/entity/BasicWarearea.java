@@ -1,6 +1,5 @@
 package com.sid.xk.shake.basic.warehouse.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 
 /**
@@ -9,12 +8,16 @@ import java.io.Serializable;
  * </p>
  *
  * @author wuxiaodong
- * @since 2021-03-28
+ * @since 2021-04-02
  */
-@TableName("basic_warearea")
-public class Warearea implements Serializable {
+public class BasicWarearea implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * ID
+     */
+    private Long id;
 
     /**
      * 库位代码
@@ -36,6 +39,13 @@ public class Warearea implements Serializable {
      */
     private String remark;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getWareareaCode() {
         return wareareaCode;
     }
@@ -67,8 +77,9 @@ public class Warearea implements Serializable {
 
     @Override
     public String toString() {
-        return "Warearea{" +
-            "wareareaCode=" + wareareaCode +
+        return "BasicWarearea{" +
+            "id=" + id +
+            ", wareareaCode=" + wareareaCode +
             ", warehouseCode=" + warehouseCode +
             ", wareareaName=" + wareareaName +
             ", remark=" + remark +

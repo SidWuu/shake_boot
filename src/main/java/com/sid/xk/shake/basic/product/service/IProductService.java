@@ -1,7 +1,7 @@
 package com.sid.xk.shake.basic.product.service;
 
-import com.sid.xk.shake.basic.product.entity.Product;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sid.xk.shake.basic.product.entity.BasicProduct;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author wuxiaodong
  * @since 2021-03-28
  */
-public interface IProductService extends IService<Product> {
+public interface IProductService extends IService<BasicProduct> {
 
 }

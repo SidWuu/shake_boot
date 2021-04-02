@@ -1,7 +1,7 @@
 package com.sid.xk.shake.basic.dictionary.mapper;
 
-import com.sid.xk.shake.basic.dictionary.entity.Dictionary;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sid.xk.shake.basic.dictionary.entity.BasicDictionary;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author wuxiaodong
  * @since 2021-03-28
  */
-public interface DictionaryMapper extends BaseMapper<Dictionary> {
+public interface DictionaryMapper extends BaseMapper<BasicDictionary> {
 
 }

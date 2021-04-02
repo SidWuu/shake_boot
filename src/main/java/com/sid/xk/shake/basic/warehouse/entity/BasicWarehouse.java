@@ -1,8 +1,7 @@
 package com.sid.xk.shake.basic.warehouse.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -10,12 +9,16 @@ import java.io.Serializable;
  * </p>
  *
  * @author wuxiaodong
- * @since 2021-03-28
+ * @since 2021-04-02
  */
-@TableName("basic_warehouse")
-public class Warehouse implements Serializable {
+public class BasicWarehouse implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * ID
+     */
+    private Long id;
 
     /**
      * 仓库代码
@@ -67,6 +70,13 @@ public class Warehouse implements Serializable {
      */
     private String remark;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getWarehouseCode() {
         return warehouseCode;
     }
@@ -140,8 +150,9 @@ public class Warehouse implements Serializable {
 
     @Override
     public String toString() {
-        return "Warehouse{" +
-            "warehouseCode=" + warehouseCode +
+        return "BasicWarehouse{" +
+            "id=" + id +
+            ", warehouseCode=" + warehouseCode +
             ", warehouseName=" + warehouseName +
             ", warehouseLinkman=" + warehouseLinkman +
             ", warehousePhone=" + warehousePhone +
