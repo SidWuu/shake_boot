@@ -11,7 +11,10 @@ import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
+import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
@@ -70,7 +73,20 @@ public class GeneratorUtil {
         dsc.setDriverName(rc.getString("spring.datasource.driver-class-name"));
         dsc.setUsername(rc.getString("spring.datasource.username"));
         dsc.setPassword(rc.getString("spring.datasource.password"));
+        // 自定义字段类型
+        dsc.setTypeConvert(new MySqlTypeConvert() {
+            @Override
+            public IColumnType processTypeConvert(GlobalConfig config, String fieldType) {
+                System.out.println("转换类型：" + fieldType);
+                if (fieldType.toLowerCase().contains("datetime")) {
+                    return DbColumnType.DATE;
+                }
+                return super.processTypeConvert(config, fieldType);
+            }
+        });
         mpg.setDataSource(dsc);
+
+
 
         // 包配置
         PackageConfig pc = new PackageConfig();

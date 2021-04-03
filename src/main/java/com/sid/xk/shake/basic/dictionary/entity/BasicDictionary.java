@@ -1,7 +1,10 @@
 package com.sid.xk.shake.basic.dictionary.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -15,9 +18,7 @@ public class BasicDictionary implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * ID
-     */
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -48,12 +49,12 @@ public class BasicDictionary implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 最近修改时间
      */
-    private LocalDateTime lastUpdateTime;
+    private Date lastUpdateTime;
 
     /**
      * 备注
@@ -67,6 +68,7 @@ public class BasicDictionary implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getDataType() {
         return dataType;
     }
@@ -74,6 +76,7 @@ public class BasicDictionary implements Serializable {
     public void setDataType(String dataType) {
         this.dataType = dataType;
     }
+
     public String getDataCode() {
         return dataCode;
     }
@@ -81,6 +84,7 @@ public class BasicDictionary implements Serializable {
     public void setDataCode(String dataCode) {
         this.dataCode = dataCode;
     }
+
     public String getDataValue() {
         return dataValue;
     }
@@ -88,6 +92,7 @@ public class BasicDictionary implements Serializable {
     public void setDataValue(String dataValue) {
         this.dataValue = dataValue;
     }
+
     public Integer getDataStatus() {
         return dataStatus;
     }
@@ -95,6 +100,7 @@ public class BasicDictionary implements Serializable {
     public void setDataStatus(Integer dataStatus) {
         this.dataStatus = dataStatus;
     }
+
     public Integer getIsDel() {
         return isDel;
     }
@@ -102,20 +108,23 @@ public class BasicDictionary implements Serializable {
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
     }
-    public LocalDateTime getCreateTime() {
+
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    public LocalDateTime getLastUpdateTime() {
+
+    public Date getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
+    public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
     public String getRemark() {
         return remark;
     }

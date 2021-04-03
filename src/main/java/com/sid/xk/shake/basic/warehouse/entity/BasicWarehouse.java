@@ -1,7 +1,10 @@
 package com.sid.xk.shake.basic.warehouse.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -15,9 +18,7 @@ public class BasicWarehouse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * ID
-     */
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -58,12 +59,12 @@ public class BasicWarehouse implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 最近修改时间
      */
-    private LocalDateTime lastUpdateTime;
+    private Date lastUpdateTime;
 
     /**
      * 备注
@@ -77,6 +78,7 @@ public class BasicWarehouse implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getWarehouseCode() {
         return warehouseCode;
     }
@@ -84,6 +86,7 @@ public class BasicWarehouse implements Serializable {
     public void setWarehouseCode(String warehouseCode) {
         this.warehouseCode = warehouseCode;
     }
+
     public String getWarehouseName() {
         return warehouseName;
     }
@@ -91,6 +94,7 @@ public class BasicWarehouse implements Serializable {
     public void setWarehouseName(String warehouseName) {
         this.warehouseName = warehouseName;
     }
+
     public String getWarehouseLinkman() {
         return warehouseLinkman;
     }
@@ -98,6 +102,7 @@ public class BasicWarehouse implements Serializable {
     public void setWarehouseLinkman(String warehouseLinkman) {
         this.warehouseLinkman = warehouseLinkman;
     }
+
     public String getWarehousePhone() {
         return warehousePhone;
     }
@@ -105,6 +110,7 @@ public class BasicWarehouse implements Serializable {
     public void setWarehousePhone(String warehousePhone) {
         this.warehousePhone = warehousePhone;
     }
+
     public String getWarehouseAddress() {
         return warehouseAddress;
     }
@@ -112,6 +118,7 @@ public class BasicWarehouse implements Serializable {
     public void setWarehouseAddress(String warehouseAddress) {
         this.warehouseAddress = warehouseAddress;
     }
+
     public Integer getWarehouseStatus() {
         return warehouseStatus;
     }
@@ -119,6 +126,7 @@ public class BasicWarehouse implements Serializable {
     public void setWarehouseStatus(Integer warehouseStatus) {
         this.warehouseStatus = warehouseStatus;
     }
+
     public Integer getIsDel() {
         return isDel;
     }
@@ -126,20 +134,23 @@ public class BasicWarehouse implements Serializable {
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
     }
-    public LocalDateTime getCreateTime() {
+
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    public LocalDateTime getLastUpdateTime() {
+
+    public Date getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
+    public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
     public String getRemark() {
         return remark;
     }

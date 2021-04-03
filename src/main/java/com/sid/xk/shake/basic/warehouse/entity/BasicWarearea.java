@@ -1,5 +1,8 @@
 package com.sid.xk.shake.basic.warehouse.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -14,9 +17,7 @@ public class BasicWarearea implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * ID
-     */
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

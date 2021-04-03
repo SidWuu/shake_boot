@@ -1,7 +1,10 @@
 package com.sid.xk.shake.basic.product.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -15,9 +18,7 @@ public class BasicProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * ID
-     */
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -93,12 +94,12 @@ public class BasicProduct implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 最近修改时间
      */
-    private LocalDateTime lastUpdateTime;
+    private Date lastUpdateTime;
 
     /**
      * 备注
@@ -112,6 +113,7 @@ public class BasicProduct implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getProductCode() {
         return productCode;
     }
@@ -119,6 +121,7 @@ public class BasicProduct implements Serializable {
     public void setProductCode(String productCode) {
         this.productCode = productCode;
     }
+
     public String getProductParent() {
         return productParent;
     }
@@ -126,6 +129,7 @@ public class BasicProduct implements Serializable {
     public void setProductParent(String productParent) {
         this.productParent = productParent;
     }
+
     public String getProductName() {
         return productName;
     }
@@ -133,6 +137,7 @@ public class BasicProduct implements Serializable {
     public void setProductName(String productName) {
         this.productName = productName;
     }
+
     public String getProductSpec() {
         return productSpec;
     }
@@ -140,6 +145,7 @@ public class BasicProduct implements Serializable {
     public void setProductSpec(String productSpec) {
         this.productSpec = productSpec;
     }
+
     public String getProductMaterial() {
         return productMaterial;
     }
@@ -147,6 +153,7 @@ public class BasicProduct implements Serializable {
     public void setProductMaterial(String productMaterial) {
         this.productMaterial = productMaterial;
     }
+
     public String getProductArea() {
         return productArea;
     }
@@ -154,6 +161,7 @@ public class BasicProduct implements Serializable {
     public void setProductArea(String productArea) {
         this.productArea = productArea;
     }
+
     public String getImagePath() {
         return imagePath;
     }
@@ -161,6 +169,7 @@ public class BasicProduct implements Serializable {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
     public String getCol1() {
         return col1;
     }
@@ -168,6 +177,7 @@ public class BasicProduct implements Serializable {
     public void setCol1(String col1) {
         this.col1 = col1;
     }
+
     public String getCol2() {
         return col2;
     }
@@ -175,6 +185,7 @@ public class BasicProduct implements Serializable {
     public void setCol2(String col2) {
         this.col2 = col2;
     }
+
     public String getCol3() {
         return col3;
     }
@@ -182,6 +193,7 @@ public class BasicProduct implements Serializable {
     public void setCol3(String col3) {
         this.col3 = col3;
     }
+
     public String getCol4() {
         return col4;
     }
@@ -189,6 +201,7 @@ public class BasicProduct implements Serializable {
     public void setCol4(String col4) {
         this.col4 = col4;
     }
+
     public String getCol5() {
         return col5;
     }
@@ -196,6 +209,7 @@ public class BasicProduct implements Serializable {
     public void setCol5(String col5) {
         this.col5 = col5;
     }
+
     public Integer getDataStatus() {
         return dataStatus;
     }
@@ -203,6 +217,7 @@ public class BasicProduct implements Serializable {
     public void setDataStatus(Integer dataStatus) {
         this.dataStatus = dataStatus;
     }
+
     public Integer getIsDel() {
         return isDel;
     }
@@ -210,20 +225,23 @@ public class BasicProduct implements Serializable {
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
     }
-    public LocalDateTime getCreateTime() {
+
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    public LocalDateTime getLastUpdateTime() {
+
+    public Date getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
+    public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
     public String getRemark() {
         return remark;
     }

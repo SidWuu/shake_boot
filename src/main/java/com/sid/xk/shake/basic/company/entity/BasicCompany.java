@@ -1,7 +1,10 @@
 package com.sid.xk.shake.basic.company.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -15,6 +18,7 @@ public class BasicCompany implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -100,12 +104,12 @@ public class BasicCompany implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 最近修改时间
      */
-    private LocalDateTime lastUpdateTime;
+    private Date lastUpdateTime;
 
     /**
      * 备注
@@ -119,6 +123,7 @@ public class BasicCompany implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getCompanyCode() {
         return companyCode;
     }
@@ -126,6 +131,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
     }
+
     public String getCompanyName() {
         return companyName;
     }
@@ -133,6 +139,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
     public String getCompanyAbbreviation() {
         return companyAbbreviation;
     }
@@ -140,6 +147,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyAbbreviation(String companyAbbreviation) {
         this.companyAbbreviation = companyAbbreviation;
     }
+
     public String getCompanyType() {
         return companyType;
     }
@@ -147,6 +155,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyType(String companyType) {
         this.companyType = companyType;
     }
+
     public String getCompanyTax() {
         return companyTax;
     }
@@ -154,6 +163,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyTax(String companyTax) {
         this.companyTax = companyTax;
     }
+
     public String getAreaProvince() {
         return areaProvince;
     }
@@ -161,6 +171,7 @@ public class BasicCompany implements Serializable {
     public void setAreaProvince(String areaProvince) {
         this.areaProvince = areaProvince;
     }
+
     public String getAreaCity() {
         return areaCity;
     }
@@ -168,6 +179,7 @@ public class BasicCompany implements Serializable {
     public void setAreaCity(String areaCity) {
         this.areaCity = areaCity;
     }
+
     public String getAreaCounty() {
         return areaCounty;
     }
@@ -175,6 +187,7 @@ public class BasicCompany implements Serializable {
     public void setAreaCounty(String areaCounty) {
         this.areaCounty = areaCounty;
     }
+
     public String getCompanyAddress() {
         return companyAddress;
     }
@@ -182,6 +195,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyAddress(String companyAddress) {
         this.companyAddress = companyAddress;
     }
+
     public String getCompanyPhone() {
         return companyPhone;
     }
@@ -189,6 +203,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyPhone(String companyPhone) {
         this.companyPhone = companyPhone;
     }
+
     public String getCompanyFax() {
         return companyFax;
     }
@@ -196,6 +211,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyFax(String companyFax) {
         this.companyFax = companyFax;
     }
+
     public String getCompanyLegal() {
         return companyLegal;
     }
@@ -203,6 +219,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyLegal(String companyLegal) {
         this.companyLegal = companyLegal;
     }
+
     public String getCompanyEmail() {
         return companyEmail;
     }
@@ -210,6 +227,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyEmail(String companyEmail) {
         this.companyEmail = companyEmail;
     }
+
     public String getCompanyPostcode() {
         return companyPostcode;
     }
@@ -217,6 +235,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyPostcode(String companyPostcode) {
         this.companyPostcode = companyPostcode;
     }
+
     public Integer getCompanyStatus() {
         return companyStatus;
     }
@@ -224,6 +243,7 @@ public class BasicCompany implements Serializable {
     public void setCompanyStatus(Integer companyStatus) {
         this.companyStatus = companyStatus;
     }
+
     public Integer getIsDel() {
         return isDel;
     }
@@ -231,20 +251,23 @@ public class BasicCompany implements Serializable {
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
     }
-    public LocalDateTime getCreateTime() {
+
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    public LocalDateTime getLastUpdateTime() {
+
+    public Date getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
+    public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
     public String getRemark() {
         return remark;
     }

@@ -1,5 +1,8 @@
 package com.sid.xk.shake.basic.company.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -14,9 +17,7 @@ public class BasicCompanyLinkman implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 自增ID
-     */
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -81,6 +82,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getLinkmanCode() {
         return linkmanCode;
     }
@@ -88,6 +90,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setLinkmanCode(String linkmanCode) {
         this.linkmanCode = linkmanCode;
     }
+
     public String getCompanyCode() {
         return companyCode;
     }
@@ -95,6 +98,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
     }
+
     public String getLinkmanName() {
         return linkmanName;
     }
@@ -102,6 +106,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setLinkmanName(String linkmanName) {
         this.linkmanName = linkmanName;
     }
+
     public String getLinkmanPhone() {
         return linkmanPhone;
     }
@@ -109,6 +114,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setLinkmanPhone(String linkmanPhone) {
         this.linkmanPhone = linkmanPhone;
     }
+
     public String getLinkmanPhoneOther() {
         return linkmanPhoneOther;
     }
@@ -116,6 +122,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setLinkmanPhoneOther(String linkmanPhoneOther) {
         this.linkmanPhoneOther = linkmanPhoneOther;
     }
+
     public String getLinkmanWechat() {
         return linkmanWechat;
     }
@@ -123,6 +130,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setLinkmanWechat(String linkmanWechat) {
         this.linkmanWechat = linkmanWechat;
     }
+
     public String getLinkmanQq() {
         return linkmanQq;
     }
@@ -130,6 +138,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setLinkmanQq(String linkmanQq) {
         this.linkmanQq = linkmanQq;
     }
+
     public String getLinkmanFax() {
         return linkmanFax;
     }
@@ -137,6 +146,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setLinkmanFax(String linkmanFax) {
         this.linkmanFax = linkmanFax;
     }
+
     public String getLinkmanEmail() {
         return linkmanEmail;
     }
@@ -144,6 +154,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setLinkmanEmail(String linkmanEmail) {
         this.linkmanEmail = linkmanEmail;
     }
+
     public String getLinkmanAddress() {
         return linkmanAddress;
     }
@@ -151,6 +162,7 @@ public class BasicCompanyLinkman implements Serializable {
     public void setLinkmanAddress(String linkmanAddress) {
         this.linkmanAddress = linkmanAddress;
     }
+
     public String getRemark() {
         return remark;
     }
