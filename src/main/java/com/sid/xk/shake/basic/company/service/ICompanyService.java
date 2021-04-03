@@ -3,6 +3,7 @@ package com.sid.xk.shake.basic.company.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sid.xk.shake.basic.company.entity.BasicCompany;
+import com.sid.xk.shake.basic.company.vo.CompanyBean;
 
 /**
  * <p>
@@ -23,4 +24,21 @@ public interface ICompanyService extends IService<BasicCompany> {
      */
     Page<BasicCompany> queryPage(BasicCompany form, Page<BasicCompany> page);
 
+    /**
+     * 新增
+     * @param bean 保存bean
+     */
+    void insert(CompanyBean bean);
+
+    /**
+     * 修改
+     * @param bean 保存bean
+     */
+    void update(CompanyBean bean);
+
+    /**
+     * 删除
+     * @param bean 保存bean
+     */
+    void delete(CompanyBean bean);
 }
