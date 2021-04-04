@@ -12,6 +12,7 @@ import com.sid.xk.shake.basic.company.vo.CompanyBean;
 import com.sid.xk.shake.common.constants.BaseConstants;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.StringUtil;
+import com.sid.xk.shake.system.rule.service.IBillRuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,8 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
 
     @Autowired
     private ICompanyLinkmanService companyLinkmanService;
+    @Autowired
+    private IBillRuleService billRuleService;
 
     @Override
     public Page<BasicCompany> queryPage(BasicCompany form, Page<BasicCompany> page) {
