@@ -7,7 +7,21 @@ spring:
     url: jdbc:mysql://192.168.31.144:49980/shake_db?characterEncoding=utf8
     username: root
     password: root1qaz2wsx
-
+  redis:
+    host: 192.168.31.144
+    port: 49970
+    timeout: 5000
+    password: passw0rd31.144
+    jedis:
+      pool:
+        #连接池最大连接数
+        max-active: 10
+        #连接池最大等待时间ms
+        max-wait: 3000
+        #连接池最大空闲连接
+        max-idle: 4
+        #连接池最小空闲连接
+        min-idle: 1
 server:
   #访问端口
   port: 8080

@@ -20,7 +20,6 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Scanner;
 
 /**
@@ -28,8 +27,6 @@ import java.util.Scanner;
  * @date 2021/03/27
  */
 public class GeneratorUtil {
-
-    private static ResourceBundle rc = ResourceBundle.getBundle("application");
 
     /**
      * <p>
@@ -68,11 +65,10 @@ public class GeneratorUtil {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(rc.getString("spring.datasource.url"));
-//        dsc.setSchemaName("public");
-        dsc.setDriverName(rc.getString("spring.datasource.driver-class-name"));
-        dsc.setUsername(rc.getString("spring.datasource.username"));
-        dsc.setPassword(rc.getString("spring.datasource.password"));
+        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+        dsc.setUrl("jdbc:mysql://192.168.31.144:49980/shake_db?characterEncoding=utf8");
+        dsc.setUsername("root");
+        dsc.setPassword("root1qaz2wsx");
         // 自定义字段类型
         dsc.setTypeConvert(new MySqlTypeConvert() {
             @Override
@@ -85,8 +81,6 @@ public class GeneratorUtil {
             }
         });
         mpg.setDataSource(dsc);
-
-
 
         // 包配置
         PackageConfig pc = new PackageConfig();
