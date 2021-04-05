@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sid.xk.shake.basic.company.entity.BasicCompany;
 import com.sid.xk.shake.basic.company.service.ICompanyService;
 import com.sid.xk.shake.basic.company.vo.CompanyBean;
+import com.sid.xk.shake.basic.company.vo.CompanyQuery;
 import com.sid.xk.shake.common.constants.StatusEnum;
 import com.sid.xk.shake.common.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,10 +39,30 @@ public class CompanyController extends BaseController {
     private ICompanyService companyService;
 
     @PostMapping("/pages")
-    public ModelMap query(@RequestBody BasicCompany form, @RequestBody Page<BasicCompany> page) {
+    public ModelMap query(@RequestBody CompanyQuery form) {
         ModelMap modelMap = new ModelMap();
         try {
-            Page<BasicCompany> data = companyService.queryPage(form, page);
+            Page<BasicCompany> data = companyService.queryPage(form);
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.SUCCESS.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.SUCCESS.getMsg());
+            modelMap.addAttribute(RES_RETURN_DATA, data);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.ERROR.getMsg());
+        }
+        return modelMap;
+    }
+
+    @GetMapping("/page/{companyCode}")
+    public ModelMap edit(@PathVariable String companyCode) {
+        ModelMap modelMap = new ModelMap();
+        try {
+            CompanyBean data = companyService.getBean(companyCode);
             modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.SUCCESS.getStatus());
             modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.SUCCESS.getMsg());
             modelMap.addAttribute(RES_RETURN_DATA, data);
@@ -59,6 +83,26 @@ public class CompanyController extends BaseController {
         ModelMap modelMap = new ModelMap();
         try {
             companyService.insert(bean);
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.SUCCESS.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.SUCCESS.getMsg());
+            modelMap.addAttribute(RES_RETURN_DATA, bean.getMain().getCompanyCode());
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.ERROR.getMsg());
+        }
+        return modelMap;
+    }
+
+    @PutMapping("/update")
+    public ModelMap update(@RequestBody CompanyBean bean) {
+        ModelMap modelMap = new ModelMap();
+        try {
+            companyService.update(bean);
             modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.SUCCESS.getStatus());
             modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.SUCCESS.getMsg());
         } catch (RuntimeException e) {

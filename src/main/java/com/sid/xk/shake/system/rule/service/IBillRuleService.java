@@ -13,8 +13,6 @@ import com.sid.xk.shake.system.rule.entity.SystemBillRule;
  */
 public interface IBillRuleService extends IService<SystemBillRule> {
 
-
-//    public String getMaxCode(String tableName, String column, String length);
-
+    SystemBillRule getRule(String table, String column);
 
 }

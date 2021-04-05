@@ -14,4 +14,11 @@ public class BaseConstants {
 
     /** 公用拆分字符 */
     public static final String SPLIT_CHARACTER = ",";
+
+    /** 公用状态0 */
+    public static final Integer STATUS_0 = 0;
+    /** 公用状态1 */
+    public static final Integer STATUS_1 = 1;
+    /** 公用状态2 */
+    public static final Integer STATUS_2 = 2;
 }

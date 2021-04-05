@@ -9,15 +9,18 @@ import com.sid.xk.shake.basic.company.mapper.CompanyMapper;
 import com.sid.xk.shake.basic.company.service.ICompanyLinkmanService;
 import com.sid.xk.shake.basic.company.service.ICompanyService;
 import com.sid.xk.shake.basic.company.vo.CompanyBean;
+import com.sid.xk.shake.basic.company.vo.CompanyQuery;
 import com.sid.xk.shake.common.constants.BaseConstants;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.StringUtil;
-import com.sid.xk.shake.system.rule.service.IBillRuleService;
+import com.sid.xk.shake.system.rule.service.IBillCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -34,31 +37,47 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
     @Autowired
     private ICompanyLinkmanService companyLinkmanService;
     @Autowired
-    private IBillRuleService billRuleService;
+    private IBillCodeService billCodeService;
 
     @Override
-    public Page<BasicCompany> queryPage(BasicCompany form, Page<BasicCompany> page) {
+    public Page<BasicCompany> queryPage(CompanyQuery form) {
         QueryWrapper<BasicCompany> query = new QueryWrapper<>();
-        query.setEntity(form);
+        Page<BasicCompany> page = new Page<>(form.getCurrent(), form.getSize());
         return baseMapper.selectPage(page, query);
+    }
+
+    @Override
+    public CompanyBean getBean(String companyCode) {
+        if (StringUtil.isEmpty(companyCode)) {
+            BaseException.throwException("参数为空");
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("company_code", companyCode);
+        BasicCompany main = getMain(params);
+        Objects.requireNonNull(main, "企业信息不存在");
+        List<BasicCompanyLinkman> details = companyLinkmanService.list(new QueryWrapper<BasicCompanyLinkman>().allEq(params));
+        CompanyBean bean = new CompanyBean();
+        bean.setMain(main);
+        bean.setDetails(details);
+        return bean;
     }
 
     @Override
     public void insert(CompanyBean bean) {
         Objects.requireNonNull(bean, "参数为空");
         Objects.requireNonNull(bean.getMain(), "参数为空");
-        BasicCompany company = bean.getMain();
+        BasicCompany main = bean.getMain();
         // 默认值
-        setDefault(company);
+        setDefault(main);
         // 校验企业
-        String msg = checkMain(company);
+        String msg = checkMain(main);
         if (StringUtil.isNotEmpty(msg)) {
             BaseException.throwException(msg);
         }
         // 保存企业
         boolean success = true;
         try {
-            success = save(company);
+            success = save(main);
         } catch (RuntimeException e) {
             BaseException.throwException(e.getMessage());
         }
@@ -66,13 +85,19 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
             BaseException.throwException("保存失败");
         }
         // 保存联系人
-        List<BasicCompanyLinkman> linkmen = bean.getDetails();
-        if (null != linkmen && !linkmen.isEmpty()) {
-            for (BasicCompanyLinkman linkman : linkmen) {
+        List<BasicCompanyLinkman> details = bean.getDetails();
+        if (null != details && !details.isEmpty()) {
+            for (BasicCompanyLinkman detail : details) {
                 // 校验联系人
+                detail.setCompanyCode(main.getCompanyCode());
+                detail.setLinkmanCode(billCodeService.getMaxCode("basic_company_linkman", "linkman_code"));
+                msg = checkDetail(detail);
+                if (StringUtil.isNotEmpty(msg)) {
+                    BaseException.throwException(msg);
+                }
             }
             try {
-                success = companyLinkmanService.saveBatch(linkmen, linkmen.size());
+                success = companyLinkmanService.saveBatch(details, details.size());
             } catch (RuntimeException e) {
                 BaseException.throwException(e.getMessage());
             }
@@ -82,13 +107,27 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         }
     }
 
+    @Override
+    public void update(CompanyBean bean) {
+
+    }
+
+    @Override
+    public void delete(CompanyBean bean) {
+
+    }
+
+    private BasicCompany getMain(Map<String, Object> params) {
+        return getOne(new QueryWrapper<BasicCompany>().allEq(params));
+    }
+
+    private BasicCompanyLinkman getDetail(Map<String, Objects> params) {
+        return companyLinkmanService.getOne(new QueryWrapper<BasicCompanyLinkman>().allEq(params));
+    }
+
     private void setDefault(BasicCompany company) {
         if (StringUtil.isEmpty(company.getCompanyCode())) {
-//            QueryWrapper<BasicCompany> queryWrapper = new QueryWrapper<>();
-//            queryWrapper.orderByDesc("company_code").last("limit 1");
-//            BasicCompany old = baseMapper.selectOne(queryWrapper);
-            // TODO 自增代码
-            company.setCompanyCode("0001");
+            company.setCompanyCode(billCodeService.getMaxCode("basic_company", "company_code"));
         }
         Date date = new Date();
         company.setCreateTime(date);
@@ -104,17 +143,19 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         if (StringUtil.isNotEmpty(msg) && msg.endsWith(BaseConstants.SPLIT_CHARACTER)) {
             msg = msg.substring(0, msg.length() - 1);
         }
-
         return msg;
     }
 
-    @Override
-    public void update(CompanyBean bean) {
+    private String checkDetail(BasicCompanyLinkman linkman) {
+        String msg = "";
+        msg += StringUtil.emptyToMsg(linkman.getCompanyCode(), "代码为空");
+        msg += StringUtil.emptyToMsg(linkman.getLinkmanName(), "姓名为空");
+        msg += StringUtil.emptyToMsg(linkman.getLinkmanPhone(), "电话为空");
 
+        if (StringUtil.isNotEmpty(msg) && msg.endsWith(BaseConstants.SPLIT_CHARACTER)) {
+            msg = msg.substring(0, msg.length() - 1);
+        }
+        return msg;
     }
 
-    @Override
-    public void delete(CompanyBean bean) {
-
-    }
 }

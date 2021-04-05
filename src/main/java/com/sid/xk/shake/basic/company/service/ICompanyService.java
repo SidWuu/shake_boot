@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sid.xk.shake.basic.company.entity.BasicCompany;
 import com.sid.xk.shake.basic.company.vo.CompanyBean;
+import com.sid.xk.shake.basic.company.vo.CompanyQuery;
 
 /**
  * <p>
@@ -19,10 +20,16 @@ public interface ICompanyService extends IService<BasicCompany> {
     /**
      * 分页查询
      * @param form 查询条件
-     * @param page 分页
      * @return Page<Company>
      */
-    Page<BasicCompany> queryPage(BasicCompany form, Page<BasicCompany> page);
+    Page<BasicCompany> queryPage(CompanyQuery form);
+
+    /**
+     * 查询详情
+     * @param companyCode
+     * @return
+     */
+    CompanyBean getBean(String companyCode);
 
     /**
      * 新增

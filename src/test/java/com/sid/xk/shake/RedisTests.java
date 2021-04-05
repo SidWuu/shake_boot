@@ -21,12 +21,12 @@ public class RedisTests {
 
     @Test
     public void set() {
-        System.out.println(redisUtil.set("redis_key", "redis_value"));
+        System.out.println(redisUtil.set("redis_key", 5));
     }
 
     @Test
     public void get() {
-        System.out.println(redisUtil.getString("redis_key"));
+        System.out.println(redisUtil.get("redis_key"));
     }
 
     @Test

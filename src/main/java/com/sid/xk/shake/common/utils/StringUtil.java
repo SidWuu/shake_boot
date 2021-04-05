@@ -86,4 +86,17 @@ public class StringUtil extends StringUtils {
         }
     }
 
+    public static String fillLeft(String source, char fill, int length) {
+        StringBuffer ret = new StringBuffer();
+
+        if (source.length() > length) {
+            return source;
+        } else {
+            int fillLength = length - source.length();
+            ret.append(String.valueOf(fill).repeat(fillLength)).append(source);
+        }
+        return ret.toString();
+    }
+
 }
+
