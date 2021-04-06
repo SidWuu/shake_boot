@@ -14,6 +14,7 @@ import com.sid.xk.shake.common.constants.BaseConstants;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.StringUtil;
 import com.sid.xk.shake.system.rule.service.IBillCodeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,11 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
 
     @Override
     public Page<BasicCompany> queryPage(CompanyQuery form) {
-        QueryWrapper<BasicCompany> query = new QueryWrapper<>();
+        BasicCompany company = new BasicCompany();
+        BeanUtils.copyProperties(form, company);
+        company.setCompanyStatus(BaseConstants.STATUS_0);
+        company.setIsDel(BaseConstants.STATUS_0);
+        QueryWrapper<BasicCompany> query = new QueryWrapper<BasicCompany>().setEntity(company);
         Page<BasicCompany> page = new Page<>(form.getCurrent(), form.getSize());
         return baseMapper.selectPage(page, query);
     }
@@ -85,6 +90,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
             BaseException.throwException("保存失败");
         }
         // 保存联系人
+        saveDetail(bean, BaseConstants.DATA_FLAG_0);
         List<BasicCompanyLinkman> details = bean.getDetails();
         if (null != details && !details.isEmpty()) {
             for (BasicCompanyLinkman detail : details) {
@@ -109,12 +115,58 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
 
     @Override
     public void update(CompanyBean bean) {
-
+        Objects.requireNonNull(bean, "参数为空");
+        Objects.requireNonNull(bean.getMain(), "参数为空");
+        BasicCompany main = bean.getMain();
+        // 校验企业
+        String msg = checkMain(main);
+        if (StringUtil.isNotEmpty(msg)) {
+            BaseException.throwException(msg);
+        }
+        // 更新企业
+        boolean success = true;
+        Map<String, Object> params = new HashMap<>();
+        params.put("company_code", main.getCompanyCode());
+        BasicCompany oldMain = getMain(params);
+        Objects.requireNonNull(oldMain, "企业信息不存在");
+        try {
+            main.setId(oldMain.getId());
+            success = updateById(main);
+        } catch (RuntimeException e) {
+            BaseException.throwException(e.getMessage());
+        }
+        if (!success) {
+            BaseException.throwException("更新失败");
+        }
+        // 更新联系人(可能新增, 修改, 删除)
+        saveDetail(bean, BaseConstants.DATA_FLAG_1);
     }
 
     @Override
-    public void delete(CompanyBean bean) {
-
+    public void delete(String companyCode) {
+        if (StringUtil.isEmpty(companyCode)) {
+            BaseException.throwException("参数为空");
+        }
+        // 删除企业
+        boolean success = true;
+        Map<String, Object> params = new HashMap<>();
+        params.put("company_code", companyCode);
+        BasicCompany oldMain = getMain(params);
+        Objects.requireNonNull(oldMain, "企业信息不存在");
+        try {
+            oldMain.setIsDel(BaseConstants.STATUS_1);
+            oldMain.setLastUpdateTime(new Date());
+            success = updateById(oldMain);
+        } catch (RuntimeException e) {
+            BaseException.throwException(e.getMessage());
+        }
+        if (!success) {
+            BaseException.throwException("删除失败");
+        }
+        // 删除联系人
+        CompanyBean bean = new CompanyBean();
+        bean.setCode(companyCode);
+        saveDetail(bean, BaseConstants.DATA_FLAG_2);
     }
 
     private BasicCompany getMain(Map<String, Object> params) {
@@ -123,6 +175,45 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
 
     private BasicCompanyLinkman getDetail(Map<String, Objects> params) {
         return companyLinkmanService.getOne(new QueryWrapper<BasicCompanyLinkman>().allEq(params));
+    }
+
+    /**
+     * 保存明细
+     * @param bean 保存信息
+     * @param dataFlag 操作标志
+     */
+    private void saveDetail(CompanyBean bean, Integer dataFlag) {
+        Objects.requireNonNull(bean, "参数为空");
+        Objects.requireNonNull(dataFlag, "参数为空");
+        List<BasicCompanyLinkman> details = bean.getDetails();
+        boolean success = true;
+        if (null != details && !details.isEmpty()) {
+            for (BasicCompanyLinkman detail : details) {
+                if (BaseConstants.DATA_FLAG_0.equals(detail.getDataFlag())) {
+                    // 新增
+
+                } else if (BaseConstants.DATA_FLAG_1.equals(detail.getDataFlag())) {
+                    // 修改
+                } else if (BaseConstants.DATA_FLAG_2.equals(detail.getDataFlag())) {
+                    // 删除
+                } else {
+                    BaseException.throwException(String.format("无法识别操作标志[%s]", dataFlag));
+                }
+            }
+        }
+        // 整单删除
+        if (StringUtil.isNotEmpty(bean.getCode()) && StringUtil.equals(dataFlag, BaseConstants.DATA_FLAG_2)) {
+            try {
+                Map<String, Object> params = new HashMap<>();
+                params.put("company_code", bean.getCode());
+                success = companyLinkmanService.removeByMap(params);
+            } catch (RuntimeException e) {
+                BaseException.throwException(e.getMessage());
+            }
+            if (!success) {
+                BaseException.throwException("删除联系人失败");
+            }
+        }
     }
 
     private void setDefault(BasicCompany company) {

@@ -18,6 +18,8 @@ public class CompanyBean implements Serializable {
 
     private List<BasicCompanyLinkman> details;
 
+
+
     public String getCode() {
         return code;
     }

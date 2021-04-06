@@ -10,6 +10,7 @@ import com.sid.xk.shake.common.constants.StatusEnum;
 import com.sid.xk.shake.common.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -117,5 +118,23 @@ public class CompanyController extends BaseController {
         return modelMap;
     }
 
+    @DeleteMapping("/delete/{companyCode}")
+    public ModelMap delete(@PathVariable String companyCode) {
+        ModelMap modelMap = new ModelMap();
+        try {
+            companyService.delete(companyCode);
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.SUCCESS.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.SUCCESS.getMsg());
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.ERROR.getMsg());
+        }
+        return modelMap;
+    }
 
 }

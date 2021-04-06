@@ -26,7 +26,7 @@ public interface ICompanyService extends IService<BasicCompany> {
 
     /**
      * 查询详情
-     * @param companyCode
+     * @param companyCode 企业代码
      * @return
      */
     CompanyBean getBean(String companyCode);
@@ -45,7 +45,7 @@ public interface ICompanyService extends IService<BasicCompany> {
 
     /**
      * 删除
-     * @param bean 保存bean
+     * @param companyCode 企业代码
      */
-    void delete(CompanyBean bean);
+    void delete(String companyCode);
 }
