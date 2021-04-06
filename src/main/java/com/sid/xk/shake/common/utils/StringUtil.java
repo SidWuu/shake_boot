@@ -3,6 +3,7 @@ package com.sid.xk.shake.common.utils;
 import org.springframework.util.StringUtils;
 
 import java.security.MessageDigest;
+import java.util.Objects;
 
 /**
  * 字符串工具类
@@ -86,6 +87,13 @@ public class StringUtil extends StringUtils {
         }
     }
 
+    /**
+     * 左填充
+     * @param source
+     * @param fill
+     * @param length
+     * @return
+     */
     public static String fillLeft(String source, char fill, int length) {
         StringBuffer ret = new StringBuffer();
 
@@ -96,6 +104,21 @@ public class StringUtil extends StringUtils {
             ret.append(String.valueOf(fill).repeat(fillLength)).append(source);
         }
         return ret.toString();
+    }
+
+    /**
+     * 全部相同
+     * @param source
+     * @param args
+     * @return
+     */
+    public static boolean equals(Object source, Object... args) {
+        for (Object arg : args) {
+            if (!Objects.equals(source, arg)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

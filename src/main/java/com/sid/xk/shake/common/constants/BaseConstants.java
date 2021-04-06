@@ -15,6 +15,13 @@ public class BaseConstants {
     /** 公用拆分字符 */
     public static final String SPLIT_CHARACTER = ",";
 
+    /** 操作标志 0新增 */
+    public static final Integer DATA_FLAG_0 = 0;
+    /** 操作标志 1修改 */
+    public static final Integer DATA_FLAG_1 = 1;
+    /** 操作标志 2删除 */
+    public static final Integer DATA_FLAG_2 = 2;
+
     /** 公用状态0 */
     public static final Integer STATUS_0 = 0;
     /** 公用状态1 */
