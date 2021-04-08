@@ -66,9 +66,9 @@ public class GeneratorUtil {
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUrl("jdbc:mysql://192.168.31.144:49980/shake_db?characterEncoding=utf8");
-        dsc.setUsername("root");
-        dsc.setPassword("root1qaz2wsx");
+        dsc.setUrl("");
+        dsc.setUsername("");
+        dsc.setPassword("");
         // 自定义字段类型
         dsc.setTypeConvert(new MySqlTypeConvert() {
             @Override
