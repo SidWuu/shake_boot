@@ -60,6 +60,10 @@ public class GeneratorUtil {
         gc.setOutputDir(projectPath + "/src/main/java/");
         gc.setAuthor("wuxiaodong");
         gc.setOpen(false);
+        // 通用查询映射结果
+        gc.setBaseResultMap(true);
+        // 通用查询结果集
+        gc.setBaseColumnList(true);
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 
