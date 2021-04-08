@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -56,11 +57,9 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         if (StringUtil.isEmpty(companyCode)) {
             BaseException.throwException("参数为空");
         }
-        Map<String, Object> params = new HashMap<>();
-        params.put("company_code", companyCode);
-        BasicCompany main = getMain(params);
+        BasicCompany main = query().eq("company_code", companyCode).one();
         Objects.requireNonNull(main, "企业信息不存在");
-        List<BasicCompanyLinkman> details = companyLinkmanService.list(new QueryWrapper<BasicCompanyLinkman>().allEq(params));
+        List<BasicCompanyLinkman> details = companyLinkmanService.query().eq("company_code", companyCode).list();
         CompanyBean bean = new CompanyBean();
         bean.setMain(main);
         bean.setDetails(details);
@@ -79,6 +78,11 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         if (StringUtil.isNotEmpty(msg)) {
             BaseException.throwException(msg);
         }
+        // 校验重复
+        BasicCompany check = query().eq("company_name", main.getCompanyName()).one();
+        if (null != check) {
+            BaseException.throwException(String.format("[%s企业已存在]", main.getCompanyName()));
+        }
         // 保存企业
         boolean success = true;
         try {
@@ -91,26 +95,6 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         }
         // 保存联系人
         saveDetail(bean, BaseConstants.DATA_FLAG_0);
-        List<BasicCompanyLinkman> details = bean.getDetails();
-        if (null != details && !details.isEmpty()) {
-            for (BasicCompanyLinkman detail : details) {
-                // 校验联系人
-                detail.setCompanyCode(main.getCompanyCode());
-                detail.setLinkmanCode(billCodeService.getMaxCode("basic_company_linkman", "linkman_code"));
-                msg = checkDetail(detail);
-                if (StringUtil.isNotEmpty(msg)) {
-                    BaseException.throwException(msg);
-                }
-            }
-            try {
-                success = companyLinkmanService.saveBatch(details, details.size());
-            } catch (RuntimeException e) {
-                BaseException.throwException(e.getMessage());
-            }
-            if (!success) {
-                BaseException.throwException("保存联系人失败");
-            }
-        }
     }
 
     @Override
@@ -123,14 +107,18 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         if (StringUtil.isNotEmpty(msg)) {
             BaseException.throwException(msg);
         }
+        BasicCompany old = query().eq("company_code", main.getCompanyCode()).one();
+        Objects.requireNonNull(old, "企业信息不存在");
+        // 校验重复
+        BasicCompany check = query().eq("company_name", main.getCompanyName()).ne("company_code", main.getCompanyCode()).one();
+        if (null != check) {
+            BaseException.throwException(String.format("[%s]企业已存在", main.getCompanyName()));
+        }
         // 更新企业
         boolean success = true;
-        Map<String, Object> params = new HashMap<>();
-        params.put("company_code", main.getCompanyCode());
-        BasicCompany oldMain = getMain(params);
-        Objects.requireNonNull(oldMain, "企业信息不存在");
         try {
-            main.setId(oldMain.getId());
+            main.setId(old.getId());
+            main.setLastUpdateTime(new Date());
             success = updateById(main);
         } catch (RuntimeException e) {
             BaseException.throwException(e.getMessage());
@@ -149,14 +137,12 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         }
         // 删除企业
         boolean success = true;
-        Map<String, Object> params = new HashMap<>();
-        params.put("company_code", companyCode);
-        BasicCompany oldMain = getMain(params);
-        Objects.requireNonNull(oldMain, "企业信息不存在");
+        BasicCompany old = query().eq("company_code", companyCode).one();
+        Objects.requireNonNull(old, "企业信息不存在");
         try {
-            oldMain.setIsDel(BaseConstants.STATUS_1);
-            oldMain.setLastUpdateTime(new Date());
-            success = updateById(oldMain);
+            old.setIsDel(BaseConstants.STATUS_1);
+            old.setLastUpdateTime(new Date());
+            success = updateById(old);
         } catch (RuntimeException e) {
             BaseException.throwException(e.getMessage());
         }
@@ -164,17 +150,16 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
             BaseException.throwException("删除失败");
         }
         // 删除联系人
-        CompanyBean bean = new CompanyBean();
-        bean.setCode(companyCode);
-        saveDetail(bean, BaseConstants.DATA_FLAG_2);
-    }
-
-    private BasicCompany getMain(Map<String, Object> params) {
-        return getOne(new QueryWrapper<BasicCompany>().allEq(params));
-    }
-
-    private BasicCompanyLinkman getDetail(Map<String, Objects> params) {
-        return companyLinkmanService.getOne(new QueryWrapper<BasicCompanyLinkman>().allEq(params));
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("company_code", companyCode);
+            success = companyLinkmanService.removeByMap(params);
+        } catch (RuntimeException e) {
+            BaseException.throwException(e.getMessage());
+        }
+        if (!success) {
+            BaseException.throwException("删除联系人失败");
+        }
     }
 
     /**
@@ -186,33 +171,97 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         Objects.requireNonNull(bean, "参数为空");
         Objects.requireNonNull(dataFlag, "参数为空");
         List<BasicCompanyLinkman> details = bean.getDetails();
-        boolean success = true;
         if (null != details && !details.isEmpty()) {
+            List<BasicCompanyLinkman> inserts = new ArrayList<>();
+            List<BasicCompanyLinkman> updates = new ArrayList<>();
+            List<Long> deleteIds = new ArrayList<>();
             for (BasicCompanyLinkman detail : details) {
                 if (BaseConstants.DATA_FLAG_0.equals(detail.getDataFlag())) {
                     // 新增
-
+                    detail.setCompanyCode(bean.getMain().getCompanyCode());
+                    detail.setLinkmanCode(billCodeService.getMaxCode("basic_company_linkman", "linkman_code"));
+                    String msg = checkDetail(detail);
+                    if (StringUtil.isNotEmpty(msg)) {
+                        BaseException.throwException(msg);
+                    }
+                    BasicCompanyLinkman check = companyLinkmanService.query().eq("linkman_name", detail.getLinkmanName()).eq("linkman_phone", detail.getLinkmanPhone()).one();
+                    if (null != check) {
+                        BaseException.throwException(String.format("[%s/%s]联系人已存在", detail.getLinkmanName(), detail.getLinkmanPhone()));
+                    }
+                    inserts.add(detail);
                 } else if (BaseConstants.DATA_FLAG_1.equals(detail.getDataFlag())) {
                     // 修改
+                    String msg = checkDetail(detail);
+                    if (StringUtil.isNotEmpty(msg)) {
+                        BaseException.throwException(msg);
+                    }
+                    BasicCompanyLinkman old = companyLinkmanService.query().eq("linkman_code", detail.getLinkmanCode()).one();
+                    Objects.requireNonNull(old, "联系人已不存在");
+                    BasicCompanyLinkman check = companyLinkmanService.query().eq("linkman_name", detail.getLinkmanName()).eq("linkman_phone", detail.getLinkmanPhone()).ne("linkman_code", detail.getLinkmanCode()).one();
+                    if (null != check) {
+                        BaseException.throwException(String.format("[%s/%s]联系人已存在", detail.getLinkmanName(), detail.getLinkmanPhone()));
+                    }
+                    detail.setId(old.getId());
+                    detail.setCompanyCode(old.getCompanyCode());
+                    detail.setLinkmanCode(old.getLinkmanCode());
+                    updates.add(detail);
                 } else if (BaseConstants.DATA_FLAG_2.equals(detail.getDataFlag())) {
                     // 删除
+                    BasicCompanyLinkman old = companyLinkmanService.query().eq("linkman_code", detail.getLinkmanCode()).one();
+                    Objects.requireNonNull(old, "联系人已不存在");
+                    deleteIds.add(detail.getId());
                 } else {
                     BaseException.throwException(String.format("无法识别操作标志[%s]", dataFlag));
                 }
             }
+            saveDetails(inserts);
+            updateDetails(updates);
+            deleteDetails(deleteIds);
         }
-        // 整单删除
-        if (StringUtil.isNotEmpty(bean.getCode()) && StringUtil.equals(dataFlag, BaseConstants.DATA_FLAG_2)) {
-            try {
-                Map<String, Object> params = new HashMap<>();
-                params.put("company_code", bean.getCode());
-                success = companyLinkmanService.removeByMap(params);
-            } catch (RuntimeException e) {
-                BaseException.throwException(e.getMessage());
-            }
-            if (!success) {
-                BaseException.throwException("删除联系人失败");
-            }
+    }
+
+    private void saveDetails(List<BasicCompanyLinkman> details) {
+        if (null == details || details.isEmpty()) {
+            return;
+        }
+        boolean success = true;
+        try {
+            success = companyLinkmanService.saveBatch(details, details.size());
+        } catch (RuntimeException e) {
+            BaseException.throwException(e.getMessage());
+        }
+        if (!success) {
+            BaseException.throwException("保存联系人失败");
+        }
+    }
+
+    private void updateDetails(List<BasicCompanyLinkman> details) {
+        if (null == details || details.isEmpty()) {
+            return;
+        }
+        boolean success = true;
+        try {
+            success = companyLinkmanService.updateBatchById(details, details.size());
+        } catch (RuntimeException e) {
+            BaseException.throwException(e.getMessage());
+        }
+        if (!success) {
+            BaseException.throwException("更新联系人失败");
+        }
+    }
+
+    private void deleteDetails(List<Long> details) {
+        if (null == details || details.isEmpty()) {
+            return;
+        }
+        boolean success = true;
+        try {
+            success = companyLinkmanService.removeByIds(details);
+        } catch (RuntimeException e) {
+            BaseException.throwException(e.getMessage());
+        }
+        if (!success) {
+            BaseException.throwException("更新联系人失败");
         }
     }
 
