@@ -1,7 +1,7 @@
 package com.sid.xk.shake.system.menu.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sid.xk.shake.template.entity.SystemMenu;
+import com.sid.xk.shake.system.menu.entity.SystemMenu;
 
 /**
  * <p>

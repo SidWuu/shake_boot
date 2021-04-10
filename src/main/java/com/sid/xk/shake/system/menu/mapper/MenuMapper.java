@@ -1,7 +1,7 @@
 package com.sid.xk.shake.system.menu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sid.xk.shake.template.entity.SystemMenu;
+import com.sid.xk.shake.system.menu.entity.SystemMenu;
 
 /**
  * <p>
