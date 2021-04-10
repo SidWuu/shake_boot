@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sid.xk.shake.basic.dictionary.mapper.DictionaryMapper">
+<mapper namespace="com.sid.xk.shake.template.mapper.BasicDictionaryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sid.xk.shake.template.entity.BasicDictionary">
+        <id column="data_type" property="dataType" />
+        <result column="id" property="id" />
+        <result column="data_code" property="dataCode" />
+        <result column="data_value" property="dataValue" />
+        <result column="data_status" property="dataStatus" />
+        <result column="is_del" property="isDel" />
+        <result column="create_time" property="createTime" />
+        <result column="last_update_time" property="lastUpdateTime" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, data_type, data_code, data_value, data_status, is_del, create_time, last_update_time, remark
+    </sql>
 
 </mapper>

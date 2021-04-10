@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sid.xk.shake.basic.company.mapper.CompanyMapper">
+<mapper namespace="com.sid.xk.shake.template.mapper.BasicCompanyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sid.xk.shake.template.entity.BasicCompany">
+        <id column="id" property="id" />
+        <result column="company_code" property="companyCode" />
+        <result column="company_name" property="companyName" />
+        <result column="company_abbreviation" property="companyAbbreviation" />
+        <result column="company_type" property="companyType" />
+        <result column="company_tax" property="companyTax" />
+        <result column="area_province" property="areaProvince" />
+        <result column="area_city" property="areaCity" />
+        <result column="area_county" property="areaCounty" />
+        <result column="company_address" property="companyAddress" />
+        <result column="company_phone" property="companyPhone" />
+        <result column="company_fax" property="companyFax" />
+        <result column="company_legal" property="companyLegal" />
+        <result column="company_email" property="companyEmail" />
+        <result column="company_postcode" property="companyPostcode" />
+        <result column="company_status" property="companyStatus" />
+        <result column="is_del" property="isDel" />
+        <result column="create_time" property="createTime" />
+        <result column="last_update_time" property="lastUpdateTime" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, company_code, company_name, company_abbreviation, company_type, company_tax, area_province, area_city, area_county, company_address, company_phone, company_fax, company_legal, company_email, company_postcode, company_status, is_del, create_time, last_update_time, remark
+    </sql>
 
 </mapper>

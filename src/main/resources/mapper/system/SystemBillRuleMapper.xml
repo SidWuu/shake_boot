@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sid.xk.shake.system.rule.mapper.BillRuleMapper">
+<mapper namespace="com.sid.xk.shake.template.mapper.SystemBillRuleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sid.xk.shake.template.entity.SystemBillRule">
+        <id column="id" property="id" />
+        <result column="table_name" property="tableName" />
+        <result column="code_column" property="codeColumn" />
+        <result column="code_length" property="codeLength" />
+        <result column="code_prefix" property="codePrefix" />
+        <result column="is_date" property="isDate" />
+        <result column="date_format" property="dateFormat" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, table_name, code_column, code_length, code_prefix, is_date, date_format, remark
+    </sql>
 
 </mapper>

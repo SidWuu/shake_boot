@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sid.xk.shake.basic.company.mapper.CompanyLinkmanMapper">
+<mapper namespace="com.sid.xk.shake.template.mapper.BasicCompanyLinkmanMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sid.xk.shake.template.entity.BasicCompanyLinkman">
+        <id column="linkman_code" property="linkmanCode" />
+        <result column="id" property="id" />
+        <result column="company_code" property="companyCode" />
+        <result column="linkman_name" property="linkmanName" />
+        <result column="linkman_phone" property="linkmanPhone" />
+        <result column="linkman_phone_other" property="linkmanPhoneOther" />
+        <result column="linkman_wechat" property="linkmanWechat" />
+        <result column="linkman_qq" property="linkmanQq" />
+        <result column="linkman_fax" property="linkmanFax" />
+        <result column="linkman_email" property="linkmanEmail" />
+        <result column="linkman_address" property="linkmanAddress" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, linkman_code, company_code, linkman_name, linkman_phone, linkman_phone_other, linkman_wechat, linkman_qq, linkman_fax, linkman_email, linkman_address, remark
+    </sql>
 
 </mapper>

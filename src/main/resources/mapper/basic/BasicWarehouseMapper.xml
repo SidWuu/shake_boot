@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sid.xk.shake.basic.warehouse.mapper.WarehouseMapper">
+<mapper namespace="com.sid.xk.shake.template.mapper.BasicWarehouseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sid.xk.shake.template.entity.BasicWarehouse">
+        <id column="warehouse_code" property="warehouseCode" />
+        <result column="id" property="id" />
+        <result column="warehouse_name" property="warehouseName" />
+        <result column="warehouse_linkman" property="warehouseLinkman" />
+        <result column="warehouse_phone" property="warehousePhone" />
+        <result column="warehouse_address" property="warehouseAddress" />
+        <result column="warehouse_status" property="warehouseStatus" />
+        <result column="is_del" property="isDel" />
+        <result column="create_time" property="createTime" />
+        <result column="last_update_time" property="lastUpdateTime" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, warehouse_code, warehouse_name, warehouse_linkman, warehouse_phone, warehouse_address, warehouse_status, is_del, create_time, last_update_time, remark
+    </sql>
 
 </mapper>
