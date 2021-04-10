@@ -51,7 +51,7 @@ public class BillCodeServiceImpl extends ServiceImpl<BillCodeMapper, SystemBillC
             code += DateUtil.getDateTimeStr(time, rule.getDateFormat());
         }
         String nextCode = getNextCode(rule, time);
-        int fillLength = rule.getCodeLength() - code.length() - nextCode.length();
+        int fillLength = rule.getCodeLength() - code.length();
         if (fillLength < 0) {
             BaseException.throwException("单号超过设定长度");
         }
