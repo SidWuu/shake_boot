@@ -79,7 +79,7 @@ public class GeneratorUtil {
             public IColumnType processTypeConvert(GlobalConfig config, String fieldType) {
                 System.out.println("转换类型：" + fieldType);
                 if (fieldType.toLowerCase().contains("datetime")) {
-                    return DbColumnType.DATE;
+                    return DbColumnType.LOCAL_DATE_TIME;
                 }
                 return super.processTypeConvert(config, fieldType);
             }

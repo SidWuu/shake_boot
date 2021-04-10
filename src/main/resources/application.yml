@@ -4,14 +4,14 @@ spring:
   datasource:
     #数据库相关配置
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: mpw:wTcu/dQlteKnaOPfgMscDn2GfPCUE5d5rVhi7wOsh+fOvza4e08tFvzjC9r6ipEVx6ZZgLAjaVFGUFaHHBOd6m5FrvicRvzSyZFtXha3Cjc=
-    username: mpw:XaGILU2nGxjjgo1UbbY/bw==
-    password: mpw:kgNqobAtuYuvQN8NaDFu4g==
+    url: mpw:0gyd8pimKmaHX3RnhZvu5iMunlSjwKo6jkeVUqfr9+lWB6d3ov7580BMJKOqNFsyk9AIhuokjtHMgPcY4CNccjUYC12dSQIPu23gKGi96/g=
+    username: mpw:fRWAu/MzNYYNdoSj0ak8Bw==
+    password: mpw:wSf/MfMQZwCp6cR3Y7SXYQ==
   redis:
-    host: mpw:HHZdEZONLmWyG6eNqBAs3w==
+    host: mpw:DgbxNY8U11YKkzKm0Jblhw==
     port: 49970
     timeout: 5000
-    password: mpw:EVSQ6uEG7hnP6N/lAT98jw==
+    password: mpw:in7IkAPb6j33ZdEfdkA9xg==
     jedis:
       pool:
         #连接池最大连接数
