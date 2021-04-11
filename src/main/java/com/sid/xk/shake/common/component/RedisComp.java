@@ -1,4 +1,4 @@
-package com.sid.xk.shake.common.utils;
+package com.sid.xk.shake.common.component;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
@@ -8,11 +8,12 @@ import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
+ * Redis 加载类
  * @author wuxiaodong
  * @date 2021/04/04
  */
 @Component
-public class RedisUtil {
+public class RedisComp {
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;

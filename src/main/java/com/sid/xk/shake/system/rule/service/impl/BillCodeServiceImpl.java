@@ -2,10 +2,10 @@ package com.sid.xk.shake.system.rule.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sid.xk.shake.common.component.RedisComp;
 import com.sid.xk.shake.common.constants.BaseConstants;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.DateUtil;
-import com.sid.xk.shake.common.utils.RedisUtil;
 import com.sid.xk.shake.common.utils.StringUtil;
 import com.sid.xk.shake.system.rule.entity.SystemBillCode;
 import com.sid.xk.shake.system.rule.entity.SystemBillRule;
@@ -32,7 +32,7 @@ public class BillCodeServiceImpl extends ServiceImpl<BillCodeMapper, SystemBillC
     @Autowired
     private IBillRuleService billRuleService;
     @Resource
-    private RedisUtil redisUtil;
+    private RedisComp redisComp;
 
 
     @Override
@@ -62,15 +62,15 @@ public class BillCodeServiceImpl extends ServiceImpl<BillCodeMapper, SystemBillC
     private String getNextCode(SystemBillRule rule, LocalDateTime time) {
         String key = String.format("CODE-%s-%s", rule.getTableName(), rule.getCodeColumn());
         // redis 过期或不存在
-        Object value = redisUtil.get(key);
+        Object value = redisComp.get(key);
         if (null == value) {
             SystemBillCode billCode = baseMapper.selectOne(new QueryWrapper<SystemBillCode>().orderByDesc("date_time").last("limit 1"));
             if (null != billCode) {
                 // 从数据库取
-                redisUtil.set(key, billCode.getMaxCode());
+                redisComp.set(key, billCode.getMaxCode());
             }
         }
-        long maxCode = redisUtil.getMaxCode(key);
+        long maxCode = redisComp.getMaxCode(key);
         // 更新单号表数据
         SystemBillCode saveMod = new SystemBillCode(rule.getTableName(), rule.getCodeColumn(), rule.getDateFormat(), time, maxCode);
         boolean success = true;
@@ -82,7 +82,7 @@ public class BillCodeServiceImpl extends ServiceImpl<BillCodeMapper, SystemBillC
         if (!success) {
             BaseException.throwException("同步单号失败");
         }
-        redisUtil.set(key, maxCode);
+        redisComp.set(key, maxCode);
         return String.valueOf(maxCode);
     }
 

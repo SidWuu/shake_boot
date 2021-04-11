@@ -48,4 +48,9 @@ public interface IWarehouseService extends IService<BasicWarehouse> {
      */
     void delete(String warehouseCode);
 
+    /**
+     * 加入缓存
+     */
+    void loadCache();
+
 }

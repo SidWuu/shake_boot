@@ -1,6 +1,6 @@
 package com.sid.xk.shake;
 
-import com.sid.xk.shake.common.utils.RedisUtil;
+import com.sid.xk.shake.common.component.RedisComp;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,21 +17,21 @@ import javax.annotation.Resource;
 public class RedisTests {
 
     @Resource
-    private RedisUtil redisUtil;
+    private RedisComp redisComp;
 
     @Test
     public void set() {
-        System.out.println(redisUtil.set("redis_key", 5));
+        System.out.println(redisComp.set("redis_key", 5));
     }
 
     @Test
     public void get() {
-        System.out.println(redisUtil.get("redis_key"));
+        System.out.println(redisComp.get("redis_key"));
     }
 
     @Test
     public void getMaxCode() {
-        System.out.println(redisUtil.getMaxCode("redis_key"));
+        System.out.println(redisComp.getMaxCode("redis_key"));
     }
 
 }

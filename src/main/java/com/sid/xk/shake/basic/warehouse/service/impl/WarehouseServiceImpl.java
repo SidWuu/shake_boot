@@ -11,6 +11,7 @@ import com.sid.xk.shake.basic.warehouse.service.IWareareaService;
 import com.sid.xk.shake.basic.warehouse.service.IWarehouseService;
 import com.sid.xk.shake.basic.warehouse.vo.WarehouseBean;
 import com.sid.xk.shake.basic.warehouse.vo.WarehouseQuery;
+import com.sid.xk.shake.common.component.RedisComp;
 import com.sid.xk.shake.common.constants.BaseConstants;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.StringUtil;
@@ -40,6 +41,8 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, BasicWare
     private IWareareaService wareareaService;
     @Autowired
     private IBillCodeService billCodeService;
+    @Autowired
+    private RedisComp redisComp;
 
     @Override
     public Page<BasicWarehouse> queryPage(WarehouseQuery form) {
@@ -160,6 +163,14 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, BasicWare
         }
         if (!success) {
             BaseException.throwException("删除库位失败");
+        }
+    }
+
+    @Override
+    public void loadCache() {
+        List<BasicWarehouse> list = lambdaQuery().eq(BasicWarehouse::getWarehouseStatus, BaseConstants.STATUS_0).eq(BasicWarehouse::getIsDel, BaseConstants.STATUS_0).list();
+        for (BasicWarehouse mod : list) {
+            redisComp.set("BasicWarehouse-" + mod.getWarehouseCode(), mod);
         }
     }
 
