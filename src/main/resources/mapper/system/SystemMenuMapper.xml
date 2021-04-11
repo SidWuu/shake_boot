@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sid.xk.shake.template.mapper.SystemMenuMapper">
+<mapper namespace="com.sid.xk.shake.system.menu.mapper.MenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.sid.xk.shake.template.entity.SystemMenu">
+    <resultMap id="BaseResultMap" type="com.sid.xk.shake.system.menu.entity.SystemMenu">
         <id column="id" property="id" />
         <result column="menu_code" property="menuCode" />
         <result column="menu_name" property="menuName" />

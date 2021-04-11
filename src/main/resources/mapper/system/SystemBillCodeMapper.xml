@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sid.xk.shake.template.mapper.SystemBillCodeMapper">
+<mapper namespace="com.sid.xk.shake.system.rule.mapper.BillCodeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.sid.xk.shake.template.entity.SystemBillCode">
+    <resultMap id="BaseResultMap" type="com.sid.xk.shake.system.rule.entity.SystemBillCode">
         <id column="id" property="id" />
         <result column="table_name" property="tableName" />
         <result column="code_column" property="codeColumn" />
