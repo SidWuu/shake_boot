@@ -185,7 +185,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
                     if (StringUtil.isNotEmpty(msg)) {
                         BaseException.throwException(msg);
                     }
-                    BasicCompanyLinkman check = companyLinkmanService.query().eq("linkman_name", detail.getLinkmanName()).eq("linkman_phone", detail.getLinkmanPhone()).one();
+                    BasicCompanyLinkman check = companyLinkmanService.lambdaQuery().eq(BasicCompanyLinkman::getLinkmanName, detail.getLinkmanName()).eq(BasicCompanyLinkman::getLinkmanPhone, detail.getLinkmanPhone()).one();
                     if (null != check) {
                         BaseException.throwException(String.format("[%s/%s]联系人已存在", detail.getLinkmanName(), detail.getLinkmanPhone()));
                     }
@@ -196,9 +196,9 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
                     if (StringUtil.isNotEmpty(msg)) {
                         BaseException.throwException(msg);
                     }
-                    BasicCompanyLinkman old = companyLinkmanService.query().eq("linkman_code", detail.getLinkmanCode()).one();
+                    BasicCompanyLinkman old = companyLinkmanService.lambdaQuery().eq(BasicCompanyLinkman::getLinkmanCode, detail.getLinkmanCode()).one();
                     Objects.requireNonNull(old, "联系人已不存在");
-                    BasicCompanyLinkman check = companyLinkmanService.query().eq("linkman_name", detail.getLinkmanName()).eq("linkman_phone", detail.getLinkmanPhone()).ne("linkman_code", detail.getLinkmanCode()).one();
+                    BasicCompanyLinkman check = companyLinkmanService.lambdaQuery().eq(BasicCompanyLinkman::getLinkmanName, detail.getLinkmanName()).eq(BasicCompanyLinkman::getLinkmanPhone, detail.getLinkmanPhone()).ne(BasicCompanyLinkman::getLinkmanCode, detail.getLinkmanCode()).one();
                     if (null != check) {
                         BaseException.throwException(String.format("[%s/%s]联系人已存在", detail.getLinkmanName(), detail.getLinkmanPhone()));
                     }
@@ -208,7 +208,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
                     updates.add(detail);
                 } else if (BaseConstants.DATA_FLAG_2.equals(detail.getDataFlag())) {
                     // 删除
-                    BasicCompanyLinkman old = companyLinkmanService.query().eq("linkman_code", detail.getLinkmanCode()).one();
+                    BasicCompanyLinkman old = companyLinkmanService.lambdaQuery().eq(BasicCompanyLinkman::getLinkmanCode, detail.getLinkmanCode()).one();
                     Objects.requireNonNull(old, "联系人已不存在");
                     deleteIds.add(detail.getId());
                 } else {
