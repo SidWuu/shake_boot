@@ -49,14 +49,12 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         company.setIsDel(BaseConstants.STATUS_0);
         QueryWrapper<BasicCompany> query = new QueryWrapper<BasicCompany>().setEntity(company);
         Page<BasicCompany> page = new Page<>(form.getCurrent(), form.getSize());
-        return baseMapper.selectPage(page, query);
+        return page(page, query);
     }
 
     @Override
     public CompanyBean getBean(String companyCode) {
-        if (StringUtil.isEmpty(companyCode)) {
-            BaseException.throwException("参数为空");
-        }
+        Objects.requireNonNull(companyCode, "参数为空");
         BasicCompany main = lambdaQuery().eq(BasicCompany::getCompanyCode, companyCode).one();
         Objects.requireNonNull(main, "企业信息不存在");
         List<BasicCompanyLinkman> details = companyLinkmanService.lambdaQuery().eq(BasicCompanyLinkman::getCompanyCode, companyCode).list();
@@ -82,7 +80,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         // 校验重复
         BasicCompany check = lambdaQuery().eq(BasicCompany::getCompanyName, main.getCompanyName()).one();
         if (null != check) {
-            BaseException.throwException(String.format("[%s企业已存在]", main.getCompanyName()));
+            BaseException.throwException(String.format("[%s]企业已存在", main.getCompanyName()));
         }
         // 保存企业
         boolean success = true;
@@ -120,6 +118,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         boolean success = true;
         try {
             main.setId(old.getId());
+            main.setCompanyCode(old.getCompanyCode());
             main.setLastUpdateTime(new Date());
             success = updateById(main);
         } catch (RuntimeException e) {
@@ -135,13 +134,14 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public void delete(String companyCode) {
-        if (StringUtil.isEmpty(companyCode)) {
-            BaseException.throwException("参数为空");
-        }
+        Objects.requireNonNull(companyCode, "参数为空");
         // 删除企业
         boolean success = true;
         BasicCompany old = lambdaQuery().eq(BasicCompany::getCompanyCode, companyCode).one();
         Objects.requireNonNull(old, "企业信息不存在");
+        if (StringUtil.equals(BaseConstants.STATUS_1, old.getIsDel())) {
+            BaseException.throwException("已删除");
+        }
         try {
             old.setIsDel(BaseConstants.STATUS_1);
             old.setLastUpdateTime(new Date());
@@ -273,6 +273,8 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         Date date = new Date();
         company.setCreateTime(date);
         company.setLastUpdateTime(date);
+        company.setCompanyStatus(BaseConstants.STATUS_0);
+        company.setIsDel(BaseConstants.STATUS_0);
     }
 
     private String checkMain(BasicCompany company) {
