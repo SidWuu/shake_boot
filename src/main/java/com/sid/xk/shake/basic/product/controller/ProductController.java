@@ -57,7 +57,7 @@ public class ProductController extends BaseController {
         return modelMap;
     }
 
-    @GetMapping("/page/{productCode}")
+    @GetMapping("/edit/{productCode}")
     public ModelMap edit(@PathVariable String productCode) {
         ModelMap modelMap = new ModelMap();
         try {

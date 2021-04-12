@@ -53,11 +53,17 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
     }
 
     @Override
+    public List<BasicCompanyLinkman> queryDetail(String companyCode) {
+        Objects.requireNonNull(companyCode, "参数为空");
+        return companyLinkmanService.lambdaQuery().eq(BasicCompanyLinkman::getCompanyCode, companyCode).list();
+    }
+
+    @Override
     public CompanyBean getBean(String companyCode) {
         Objects.requireNonNull(companyCode, "参数为空");
         BasicCompany main = lambdaQuery().eq(BasicCompany::getCompanyCode, companyCode).one();
         Objects.requireNonNull(main, "企业信息不存在");
-        List<BasicCompanyLinkman> details = companyLinkmanService.lambdaQuery().eq(BasicCompanyLinkman::getCompanyCode, companyCode).list();
+        List<BasicCompanyLinkman> details = queryDetail(companyCode);
         CompanyBean bean = new CompanyBean();
         bean.setMain(main);
         bean.setDetails(details);

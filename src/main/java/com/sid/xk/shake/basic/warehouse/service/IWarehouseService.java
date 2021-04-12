@@ -2,9 +2,12 @@ package com.sid.xk.shake.basic.warehouse.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sid.xk.shake.basic.warehouse.entity.BasicWarearea;
 import com.sid.xk.shake.basic.warehouse.entity.BasicWarehouse;
 import com.sid.xk.shake.basic.warehouse.vo.WarehouseBean;
 import com.sid.xk.shake.basic.warehouse.vo.WarehouseQuery;
+
+import java.util.List;
 
 /**
  * <p>
@@ -24,9 +27,16 @@ public interface IWarehouseService extends IService<BasicWarehouse> {
     Page<BasicWarehouse> queryPage(WarehouseQuery form);
 
     /**
+     * 查询明细
+     * @param warehouseCode 仓库代码
+     * @return List<BasicWarearea>
+     */
+    List<BasicWarearea> queryDetail(String warehouseCode);
+
+    /**
      * 查询详情
      * @param warehouseCode 仓库代码
-     * @return
+     * @return WarehouseBean
      */
     WarehouseBean getBean(String warehouseCode);
 

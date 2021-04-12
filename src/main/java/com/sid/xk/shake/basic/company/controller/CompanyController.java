@@ -3,6 +3,7 @@ package com.sid.xk.shake.basic.company.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sid.xk.shake.basic.company.entity.BasicCompany;
+import com.sid.xk.shake.basic.company.entity.BasicCompanyLinkman;
 import com.sid.xk.shake.basic.company.service.ICompanyService;
 import com.sid.xk.shake.basic.company.vo.CompanyBean;
 import com.sid.xk.shake.basic.company.vo.CompanyQuery;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import static com.sid.xk.shake.common.constants.BaseConstants.RES_RETURN_DATA;
 import static com.sid.xk.shake.common.constants.BaseConstants.RES_RETURN_MESSAGE;
@@ -59,7 +62,27 @@ public class CompanyController extends BaseController {
         return modelMap;
     }
 
-    @GetMapping("/page/{companyCode}")
+    @GetMapping("/detail/{companyCode}")
+    public ModelMap queryDetail(@PathVariable String companyCode) {
+        ModelMap modelMap = new ModelMap();
+        try {
+            List<BasicCompanyLinkman> data = companyService.queryDetail(companyCode);
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.SUCCESS.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.SUCCESS.getMsg());
+            modelMap.addAttribute(RES_RETURN_DATA, data);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.ERROR.getMsg());
+        }
+        return modelMap;
+    }
+
+    @GetMapping("/edit/{companyCode}")
     public ModelMap edit(@PathVariable String companyCode) {
         ModelMap modelMap = new ModelMap();
         try {

@@ -2,6 +2,7 @@ package com.sid.xk.shake.basic.warehouse.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sid.xk.shake.basic.warehouse.entity.BasicWarearea;
 import com.sid.xk.shake.basic.warehouse.entity.BasicWarehouse;
 import com.sid.xk.shake.basic.warehouse.service.IWarehouseService;
 import com.sid.xk.shake.basic.warehouse.vo.WarehouseBean;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import static com.sid.xk.shake.common.constants.BaseConstants.RES_RETURN_DATA;
 import static com.sid.xk.shake.common.constants.BaseConstants.RES_RETURN_MESSAGE;
@@ -58,7 +61,27 @@ public class WarehouseController extends BaseController {
         return modelMap;
     }
 
-    @GetMapping("/page/{warehouseCode}")
+    @GetMapping("/detail/{warehouseCode}")
+    public ModelMap queryDetail(@PathVariable String warehouseCode) {
+        ModelMap modelMap = new ModelMap();
+        try {
+            List<BasicWarearea> data = warehouseService.queryDetail(warehouseCode);
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.SUCCESS.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.SUCCESS.getMsg());
+            modelMap.addAttribute(RES_RETURN_DATA, data);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            modelMap.addAttribute(RES_RETURN_STATUS, StatusEnum.ERROR.getStatus());
+            modelMap.addAttribute(RES_RETURN_MESSAGE, StatusEnum.ERROR.getMsg());
+        }
+        return modelMap;
+    }
+
+    @GetMapping("/edit/{warehouseCode}")
     public ModelMap edit(@PathVariable String warehouseCode) {
         ModelMap modelMap = new ModelMap();
         try {

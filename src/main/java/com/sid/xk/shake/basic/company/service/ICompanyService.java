@@ -3,8 +3,11 @@ package com.sid.xk.shake.basic.company.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sid.xk.shake.basic.company.entity.BasicCompany;
+import com.sid.xk.shake.basic.company.entity.BasicCompanyLinkman;
 import com.sid.xk.shake.basic.company.vo.CompanyBean;
 import com.sid.xk.shake.basic.company.vo.CompanyQuery;
+
+import java.util.List;
 
 /**
  * <p>
@@ -25,9 +28,16 @@ public interface ICompanyService extends IService<BasicCompany> {
     Page<BasicCompany> queryPage(CompanyQuery form);
 
     /**
+     * 查询明细
+     * @param companyCode 企业代码
+     * @return List<BasicCompanyLinkman>
+     */
+    List<BasicCompanyLinkman> queryDetail(String companyCode);
+
+    /**
      * 查询详情
      * @param companyCode 企业代码
-     * @return
+     * @return CompanyBean
      */
     CompanyBean getBean(String companyCode);
 

@@ -56,11 +56,17 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, BasicWare
     }
 
     @Override
+    public List<BasicWarearea> queryDetail(String warehouseCode) {
+        Objects.requireNonNull(warehouseCode, "参数为空");
+        return wareareaService.lambdaQuery().eq(BasicWarearea::getWarehouseCode, warehouseCode).list();
+    }
+
+    @Override
     public WarehouseBean getBean(String warehouseCode) {
         Objects.requireNonNull(warehouseCode, "参数为空");
         BasicWarehouse main = lambdaQuery().eq(BasicWarehouse::getWarehouseCode, warehouseCode).one();
         Objects.requireNonNull(main, "仓库信息不存在");
-        List<BasicWarearea> details = wareareaService.lambdaQuery().eq(BasicWarearea::getWarehouseCode, warehouseCode).list();
+        List<BasicWarearea> details = queryDetail(warehouseCode);
         WarehouseBean bean = new WarehouseBean();
         bean.setMain(main);
         bean.setDetails(details);
@@ -198,7 +204,6 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, BasicWare
                     }
                     BasicWarearea check = wareareaService.lambdaQuery().eq(BasicWarearea::getWareareaName, detail.getWareareaName()).eq(BasicWarearea::getWarehouseCode, detail.getWarehouseCode()).one();
                     if (null != check) {
-                        // TODO 仓库代码：名称加入redis
                         BaseException.throwException(String.format("[%s/%s]库位已存在", detail.getWareareaName(), detail.getWarehouseCode()));
                     }
                     if (null == inserts) {
@@ -215,7 +220,6 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, BasicWare
                     Objects.requireNonNull(old, "库位已不存在");
                     BasicWarearea check = wareareaService.lambdaQuery().eq(BasicWarearea::getWareareaName, detail.getWareareaName()).eq(BasicWarearea::getWarehouseCode, detail.getWarehouseCode()).ne(BasicWarearea::getWareareaCode, detail.getWareareaCode()).one();
                     if (null != check) {
-                        // TODO 仓库代码：名称加入redis
                         BaseException.throwException(String.format("[%s/%s]库位人已存在", detail.getWareareaName(), detail.getWarehouseCode()));
                     }
                     detail.setId(old.getId());
