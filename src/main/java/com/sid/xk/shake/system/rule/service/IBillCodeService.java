@@ -1,6 +1,7 @@
 package com.sid.xk.shake.system.rule.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sid.xk.shake.common.constants.BillEnum;
 import com.sid.xk.shake.system.rule.entity.SystemBillCode;
 
 /**
@@ -16,11 +17,10 @@ public interface IBillCodeService extends IService<SystemBillCode> {
 
     /**
      * 获取最大单号
-     * @param table
-     * @param column
-     * @return
+     * @param billEnum 单据枚举
+     * @return String
      */
-    String getMaxCode(String table, String column);
+    String getMaxCode(BillEnum billEnum);
 
 
 }

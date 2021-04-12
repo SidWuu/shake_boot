@@ -12,6 +12,7 @@ import com.sid.xk.shake.basic.company.service.ICompanyService;
 import com.sid.xk.shake.basic.company.vo.CompanyBean;
 import com.sid.xk.shake.basic.company.vo.CompanyQuery;
 import com.sid.xk.shake.common.constants.BaseConstants;
+import com.sid.xk.shake.common.constants.BillEnum;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.StringUtil;
 import com.sid.xk.shake.system.rule.service.IBillCodeService;
@@ -186,7 +187,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
                 if (BaseConstants.DATA_FLAG_0.equals(detail.getDataFlag())) {
                     // 新增
                     detail.setCompanyCode(bean.getMain().getCompanyCode());
-                    detail.setLinkmanCode(billCodeService.getMaxCode("basic_company_linkman", "linkman_code"));
+                    detail.setLinkmanCode(billCodeService.getMaxCode(BillEnum.BasicCompanyLinkman));
                     String msg = checkDetail(detail);
                     if (StringUtil.isNotEmpty(msg)) {
                         BaseException.throwException(msg);
@@ -274,7 +275,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
 
     private void setDefault(BasicCompany company) {
         if (StringUtil.isEmpty(company.getCompanyCode())) {
-            company.setCompanyCode(billCodeService.getMaxCode("basic_company", "company_code"));
+            company.setCompanyCode(billCodeService.getMaxCode(BillEnum.BasicCompany));
         }
         Date date = new Date();
         company.setCreateTime(date);

@@ -13,6 +13,7 @@ import com.sid.xk.shake.basic.warehouse.vo.WarehouseBean;
 import com.sid.xk.shake.basic.warehouse.vo.WarehouseQuery;
 import com.sid.xk.shake.common.component.RedisComp;
 import com.sid.xk.shake.common.constants.BaseConstants;
+import com.sid.xk.shake.common.constants.BillEnum;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.StringUtil;
 import com.sid.xk.shake.system.rule.service.IBillCodeService;
@@ -176,7 +177,7 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, BasicWare
     public void loadCache() {
         List<BasicWarehouse> list = lambdaQuery().eq(BasicWarehouse::getWarehouseStatus, BaseConstants.STATUS_0).eq(BasicWarehouse::getIsDel, BaseConstants.STATUS_0).list();
         for (BasicWarehouse mod : list) {
-            redisComp.set("BasicWarehouse-" + mod.getWarehouseCode(), mod);
+            redisComp.set(BillEnum.BasicWarehouse.getRedisKey() + mod.getWarehouseCode(), mod);
         }
     }
 
@@ -197,7 +198,7 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, BasicWare
                 if (BaseConstants.DATA_FLAG_0.equals(detail.getDataFlag())) {
                     // 新增
                     detail.setWarehouseCode(bean.getMain().getWarehouseCode());
-                    detail.setWareareaCode(billCodeService.getMaxCode("basic_warearea", "warearea_code"));
+                    detail.setWareareaCode(billCodeService.getMaxCode(BillEnum.BasicWarearea));
                     String msg = checkDetail(detail);
                     if (StringUtil.isNotEmpty(msg)) {
                         BaseException.throwException(msg);
@@ -294,7 +295,7 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, BasicWare
 
     private void setDefault(BasicWarehouse warehouse) {
         if (StringUtil.isEmpty(warehouse.getWarehouseCode())) {
-            warehouse.setWarehouseCode(billCodeService.getMaxCode("basic_warehouse", "warehouse_code"));
+            warehouse.setWarehouseCode(billCodeService.getMaxCode(BillEnum.BasicWarehouse));
         }
         Date date = new Date();
         warehouse.setCreateTime(date);

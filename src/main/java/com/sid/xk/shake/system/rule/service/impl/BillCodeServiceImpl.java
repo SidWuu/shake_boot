@@ -1,9 +1,9 @@
 package com.sid.xk.shake.system.rule.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sid.xk.shake.common.component.RedisComp;
 import com.sid.xk.shake.common.constants.BaseConstants;
+import com.sid.xk.shake.common.constants.BillEnum;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.DateUtil;
 import com.sid.xk.shake.common.utils.StringUtil;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * <p>
@@ -36,11 +37,10 @@ public class BillCodeServiceImpl extends ServiceImpl<BillCodeMapper, SystemBillC
 
 
     @Override
-    public String getMaxCode(String table, String column) {
-        if (StringUtil.isOneEmpty(table, column)) {
-            BaseException.throwException("参数为空");
-        }
-        SystemBillRule rule = billRuleService.getRule(table, column);
+    public String getMaxCode(BillEnum billEnum) {
+        Objects.requireNonNull(billEnum, "参数为空");
+        String table = billEnum.getTable(), column = billEnum.getColumn();
+        SystemBillRule rule = billRuleService.lambdaQuery().eq(SystemBillRule::getTableName, table).eq(SystemBillRule::getCodeColumn, column).one();
         if (null == rule) {
             BaseException.throwException(String.format("[%s/%s]未设置单据代码生成规则", table, column));
         }
@@ -64,9 +64,9 @@ public class BillCodeServiceImpl extends ServiceImpl<BillCodeMapper, SystemBillC
         // redis 过期或不存在
         Object value = redisComp.get(key);
         if (null == value) {
-            SystemBillCode billCode = baseMapper.selectOne(new QueryWrapper<SystemBillCode>().orderByDesc("date_time").last("limit 1"));
+            // 从数据库查询最大一条
+            SystemBillCode billCode = lambdaQuery().orderByDesc(SystemBillCode::getDateTime).last("limit 1").one();
             if (null != billCode) {
-                // 从数据库取
                 redisComp.set(key, billCode.getMaxCode());
             }
         }
@@ -75,7 +75,7 @@ public class BillCodeServiceImpl extends ServiceImpl<BillCodeMapper, SystemBillC
         SystemBillCode saveMod = new SystemBillCode(rule.getTableName(), rule.getCodeColumn(), rule.getDateFormat(), time, maxCode);
         boolean success = true;
         try {
-            success = saveOrUpdate(saveMod, new QueryWrapper<SystemBillCode>().eq("table_name", rule.getTableName()).eq("code_column", rule.getCodeColumn()));
+            success = saveOrUpdate(saveMod, lambdaQuery().eq(SystemBillCode::getTableName, rule.getTableName()).eq(SystemBillCode::getCodeColumn, rule.getCodeColumn()));
         } catch (RuntimeException e) {
             BaseException.throwException(e.getMessage());
         }

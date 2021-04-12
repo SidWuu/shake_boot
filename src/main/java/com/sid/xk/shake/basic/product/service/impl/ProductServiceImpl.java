@@ -8,6 +8,7 @@ import com.sid.xk.shake.basic.product.mapper.ProductMapper;
 import com.sid.xk.shake.basic.product.service.IProductService;
 import com.sid.xk.shake.basic.product.vo.ProductQuery;
 import com.sid.xk.shake.common.constants.BaseConstants;
+import com.sid.xk.shake.common.constants.BillEnum;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.StringUtil;
 import com.sid.xk.shake.system.rule.service.IBillCodeService;
@@ -134,7 +135,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, BasicProduct>
 
     private void setDefault(BasicProduct mod) {
         if (StringUtil.isEmpty(mod.getProductCode())) {
-            mod.setProductCode(billCodeService.getMaxCode("basic_product", "product_code"));
+            mod.setProductCode(billCodeService.getMaxCode(BillEnum.BasicProduct));
         }
         Date date = new Date();
         mod.setCreateTime(date);
