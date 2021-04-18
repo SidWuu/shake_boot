@@ -55,7 +55,7 @@ public class StringUtil extends StringUtils {
      * @param msg
      * @return
      */
-    public static String emptyToMsg(String str, String msg) {
+    public static String emptyToMsg(Object str, String msg) {
         String ret = "";
         if (isEmpty(str)) {
             ret = msg + ",";
@@ -124,6 +124,21 @@ public class StringUtil extends StringUtils {
         return true;
     }
 
+    /**
+     * 获取随机字符
+     * @param length 长度
+     * @return String
+     */
+    public static String randomString(int length) {
+        return randomString(BASE_RANDOM_FULL_CHAR_NUMBER, length);
+    }
+
+    /**
+     * 获取随机字符, 指定字符范围
+     * @param baseString 字符串
+     * @param length 长度
+     * @return String
+     */
     public static String randomString(String baseString, int length) {
         if (isEmpty(baseString)) {
             return "";
