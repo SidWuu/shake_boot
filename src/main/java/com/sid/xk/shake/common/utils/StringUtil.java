@@ -2,8 +2,10 @@ package com.sid.xk.shake.common.utils;
 
 import org.springframework.util.StringUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 字符串工具类
@@ -12,6 +14,7 @@ import java.util.Objects;
  */
 public class StringUtil extends StringUtils {
 
+    public static final String BASE_RANDOM_FULL_CHAR_NUMBER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     /**
      * 单个非空
@@ -65,8 +68,8 @@ public class StringUtil extends StringUtils {
      * @param s
      * @return
      */
-    public static String getMd5(String s) {
-        return null == s ? null : getMd5(s.getBytes());
+    public static String getMd5(String s, String charset) throws UnsupportedEncodingException {
+        return null == s ? null : getMd5(null == charset? s.getBytes() : s.getBytes(charset));
     }
 
     public static String getMd5(byte[] bytes) {
@@ -119,6 +122,22 @@ public class StringUtil extends StringUtils {
             }
         }
         return true;
+    }
+
+    public static String randomString(String baseString, int length) {
+        if (isEmpty(baseString)) {
+            return "";
+        } else {
+            StringBuilder sb = new StringBuilder(length);
+            if (length < 1) {
+                length = 1;
+            }
+            for(int i = 0; i < length; ++i) {
+                int number = ThreadLocalRandom.current().nextInt(baseString.length());
+                sb.append(baseString.charAt(number));
+            }
+            return sb.toString();
+        }
     }
 
 }
