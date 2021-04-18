@@ -18,8 +18,8 @@ public class StringUtil extends StringUtils {
 
     /**
      * 单个非空
-     * @param str
-     * @return
+     * @param str 校验字符串
+     * @return boolean
      */
     public static boolean isNotEmpty(Object str) {
         return !isEmpty(str);
@@ -27,17 +27,17 @@ public class StringUtil extends StringUtils {
 
     /**
      * 全部非空
-     * @param args
-     * @return
+     * @param args 校验字符串
+     * @return boolean
      */
     public static boolean isNotEmpty(Object... args) {
         return !isOneEmpty(args);
     }
 
     /**
-     * 只要存在空
-     * @param args
-     * @return
+     * 任意为空
+     * @param args 校验字符串
+     * @return boolean
      */
     public static boolean isOneEmpty(Object... args) {
         boolean ret = false;
@@ -51,9 +51,9 @@ public class StringUtil extends StringUtils {
 
     /**
      * 为空返回提示
-     * @param str
-     * @param msg
-     * @return
+     * @param str 校验字符串
+     * @param msg 为空返回信息,
+     * @return String
      */
     public static String emptyToMsg(Object str, String msg) {
         String ret = "";
@@ -65,13 +65,19 @@ public class StringUtil extends StringUtils {
 
     /**
      * MD5加密(大写)
-     * @param s
-     * @return
+     * @param s 加密字符串
+     * @param charset 字符集
+     * @return String
      */
     public static String getMd5(String s, String charset) throws UnsupportedEncodingException {
         return null == s ? null : getMd5(null == charset? s.getBytes() : s.getBytes(charset));
     }
 
+    /**
+     * MD5加密(大写)
+     * @param bytes 加密字节
+     * @return String
+     */
     public static String getMd5(byte[] bytes) {
         char[] hexDigits = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         try {
@@ -92,10 +98,10 @@ public class StringUtil extends StringUtils {
 
     /**
      * 左填充
-     * @param source
-     * @param fill
-     * @param length
-     * @return
+     * @param source 原字符串
+     * @param fill 填充字符
+     * @param length 填充后长度
+     * @return String
      */
     public static String fillLeft(String source, char fill, int length) {
         StringBuffer ret = new StringBuffer();
@@ -111,9 +117,9 @@ public class StringUtil extends StringUtils {
 
     /**
      * 全部相同
-     * @param source
-     * @param args
-     * @return
+     * @param source 原字符串
+     * @param args 比较字符串
+     * @return boolean
      */
     public static boolean equals(Object source, Object... args) {
         for (Object arg : args) {
