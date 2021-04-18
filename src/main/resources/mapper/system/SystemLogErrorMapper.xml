@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sid.xk.shake.temp.mapper.SystemLogErrorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sid.xk.shake.temp.entity.SystemLogError">
+        <id column="id" property="id" />
+        <result column="request_param" property="requestParam" />
+        <result column="exception_name" property="exceptionName" />
+        <result column="exception_message" property="exceptionMessage" />
+        <result column="user_name" property="userName" />
+        <result column="user_nick" property="userNick" />
+        <result column="method" property="method" />
+        <result column="uri" property="uri" />
+        <result column="ip" property="ip" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, request_param, exception_name, exception_message, user_name, user_nick, method, uri, ip, create_time
+    </sql>
+
+</mapper>
