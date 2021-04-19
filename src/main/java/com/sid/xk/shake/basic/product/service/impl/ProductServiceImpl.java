@@ -106,7 +106,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, BasicProduct>
             BaseException.throwException(e.getMessage());
         }
         if (!success) {
-            BaseException.throwException("保存失败");
+            BaseException.throwException("更新失败");
         }
     }
 
@@ -114,7 +114,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, BasicProduct>
     @Transactional(rollbackFor = {Exception.class})
     public void delete(String productCode) {
         Objects.requireNonNull(productCode, "参数为空");
-        // 删除企业
+        // 删除物资
         boolean success = true;
         BasicProduct old = lambdaQuery().eq(BasicProduct::getProductCode, productCode).one();
         Objects.requireNonNull(old, "物资信息不存在");
