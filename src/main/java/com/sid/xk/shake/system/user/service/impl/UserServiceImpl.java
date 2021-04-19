@@ -13,6 +13,7 @@ import com.sid.xk.shake.system.user.service.IUserService;
 import com.sid.xk.shake.system.user.vo.UserQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -45,6 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void insert(SystemUser mod) {
         BaseException.requireNonNull(mod, "参数为空");
         // 默认值
@@ -77,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void update(SystemUser mod) {
         BaseException.requireNonNull(mod, "参数为空");
         SystemUser old = lambdaQuery().eq(SystemUser::getUserName, mod.getUserName()).one();
@@ -99,6 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void delete(String userName) {
         BaseException.requireNonNull(userName, "参数为空");
         // 删除企业
@@ -121,6 +125,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void reset(String userName, String oldPassword, String newPassword) {
         if (StringUtil.isOneEmpty(userName, oldPassword, newPassword)) {
             BaseException.throwException("参数为空");
