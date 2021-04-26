@@ -58,4 +58,10 @@ public interface ICompanyService extends IService<BasicCompany> {
      * @param companyCode 企业代码
      */
     void delete(String companyCode);
+
+    /**
+     * 加入缓存
+     * key: BasicCompany-company_code-{companyCode}, value: BasicCompany
+     */
+    void loadCache();
 }

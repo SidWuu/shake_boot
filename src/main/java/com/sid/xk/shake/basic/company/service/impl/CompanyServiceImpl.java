@@ -11,6 +11,7 @@ import com.sid.xk.shake.basic.company.service.ICompanyLinkmanService;
 import com.sid.xk.shake.basic.company.service.ICompanyService;
 import com.sid.xk.shake.basic.company.vo.CompanyBean;
 import com.sid.xk.shake.basic.company.vo.CompanyQuery;
+import com.sid.xk.shake.common.component.RedisComp;
 import com.sid.xk.shake.common.constants.BaseConstants;
 import com.sid.xk.shake.common.constants.BillEnum;
 import com.sid.xk.shake.common.exception.BaseException;
@@ -41,6 +42,8 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
     private ICompanyLinkmanService companyLinkmanService;
     @Autowired
     private IBillCodeService billCodeService;
+    @Autowired
+    private RedisComp redisComp;
 
     @Override
     public Page<BasicCompany> queryPage(CompanyQuery form) {
@@ -167,6 +170,14 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, BasicCompany>
         }
         if (!success) {
             BaseException.throwException("删除联系人失败");
+        }
+    }
+
+    @Override
+    public void loadCache() {
+        List<BasicCompany> list = lambdaQuery().eq(BasicCompany::getCompanyStatus, BaseConstants.STATUS_0).eq(BasicCompany::getIsDel, BaseConstants.STATUS_0).list();
+        for (BasicCompany mod : list) {
+            redisComp.set(BillEnum.BasicCompany.getRedisKey() + mod.getCompanyCode(), mod);
         }
     }
 

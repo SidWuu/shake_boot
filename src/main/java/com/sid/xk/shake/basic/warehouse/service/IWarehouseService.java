@@ -60,6 +60,7 @@ public interface IWarehouseService extends IService<BasicWarehouse> {
 
     /**
      * 加入缓存
+     * key: BasicWarehouse-warehouse_code-{warehouseCode}, value: BasicWarehouse
      */
     void loadCache();
 

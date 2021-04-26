@@ -6,10 +6,13 @@ import com.sid.xk.shake.basic.dictionary.entity.BasicDictionary;
 import com.sid.xk.shake.basic.dictionary.mapper.DictionaryMapper;
 import com.sid.xk.shake.basic.dictionary.service.IDictionaryService;
 import com.sid.xk.shake.basic.dictionary.vo.DictionaryQuery;
+import com.sid.xk.shake.common.component.RedisComp;
 import com.sid.xk.shake.common.constants.BaseConstants;
+import com.sid.xk.shake.common.constants.BillEnum;
 import com.sid.xk.shake.common.exception.BaseException;
 import com.sid.xk.shake.common.utils.StringUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,9 @@ import java.util.Objects;
  */
 @Service
 public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, BasicDictionary> implements IDictionaryService {
+
+    @Autowired
+    private RedisComp redisComp;
 
     @Override
     public List<BasicDictionary> queryTree(String dataType) {
@@ -134,6 +140,14 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, BasicDi
         }
         if (!success) {
             BaseException.throwException("删除失败");
+        }
+    }
+
+    @Override
+    public void loadCache() {
+        List<BasicDictionary> list = lambdaQuery().eq(BasicDictionary::getDataStatus, BaseConstants.STATUS_0).eq(BasicDictionary::getIsDel, BaseConstants.STATUS_0).list();
+        for (BasicDictionary mod : list) {
+            redisComp.lSet(BillEnum.BasicDictionary.getRedisKey() + mod.getDataType(), mod);
         }
     }
 

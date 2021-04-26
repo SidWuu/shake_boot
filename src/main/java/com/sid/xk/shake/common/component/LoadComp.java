@@ -1,5 +1,8 @@
 package com.sid.xk.shake.common.component;
 
+import com.sid.xk.shake.basic.company.service.ICompanyService;
+import com.sid.xk.shake.basic.dictionary.service.IDictionaryService;
+import com.sid.xk.shake.basic.product.service.IProductService;
 import com.sid.xk.shake.basic.warehouse.service.IWarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,13 +16,21 @@ import javax.annotation.PostConstruct;
  */
 @Component
 public class LoadComp {
-
+    @Autowired
+    private ICompanyService companyService;
     @Autowired
     private IWarehouseService warehouseService;
+    @Autowired
+    private IProductService productService;
+    @Autowired
+    private IDictionaryService dictionaryService;
 
     @PostConstruct
     public void initCache() {
+        companyService.loadCache();
         warehouseService.loadCache();
+        productService.loadCache();
+        dictionaryService.loadCache();
     }
 
 }

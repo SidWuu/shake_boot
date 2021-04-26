@@ -12,7 +12,7 @@ public enum BillEnum {
     /* 往来企业联系人[BasicCompanyLinkman - basic_company_linkman] */
     BasicCompanyLinkman("BasicCompanyLinkman", "basic_company_linkman", "linkman_code"),
     /* 数据字典[BasicDictionary - basic_dictionary] */
-    BasicDictionary("BasicDictionary", "basic_dictionary", ""),
+    BasicDictionary("BasicDictionary", "basic_dictionary", "data_type"),
     /* 物资代码[BasicProduct - basic_product] */
     BasicProduct("BasicProduct", "basic_product", "product_code"),
     /* 仓库[BasicWarehouse - basic_warehouse] */
@@ -21,7 +21,7 @@ public enum BillEnum {
     BasicWarearea("BasicWarearea", "basic_warearea", "warearea_code");
 
     public String getRedisKey() {
-        return getEntity() + "-" + getColumn();
+        return getEntity() + "-" + getColumn() + "-";
     }
 
     /** 实体名称 */

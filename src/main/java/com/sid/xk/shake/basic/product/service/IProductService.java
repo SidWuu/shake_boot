@@ -47,4 +47,10 @@ public interface IProductService extends IService<BasicProduct> {
      */
     void delete(String productCode);
 
+    /**
+     * 加入缓存
+     * key: BasicProduct-product_code-{productParent}, value: Map<{productCode}, BasicProduct>
+     */
+    void loadCache();
+
 }

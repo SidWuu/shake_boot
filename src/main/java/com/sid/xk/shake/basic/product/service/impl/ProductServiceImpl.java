@@ -7,6 +7,7 @@ import com.sid.xk.shake.basic.product.entity.BasicProduct;
 import com.sid.xk.shake.basic.product.mapper.ProductMapper;
 import com.sid.xk.shake.basic.product.service.IProductService;
 import com.sid.xk.shake.basic.product.vo.ProductQuery;
+import com.sid.xk.shake.common.component.RedisComp;
 import com.sid.xk.shake.common.constants.BaseConstants;
 import com.sid.xk.shake.common.constants.BillEnum;
 import com.sid.xk.shake.common.exception.BaseException;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -33,6 +35,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, BasicProduct>
 
     @Autowired
     private IBillCodeService billCodeService;
+    @Autowired
+    private RedisComp redisComp;
 
     @Override
     public Page<BasicProduct> queryPage(ProductQuery form) {
@@ -130,6 +134,14 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, BasicProduct>
         }
         if (!success) {
             BaseException.throwException("删除失败");
+        }
+    }
+
+    @Override
+    public void loadCache() {
+        List<BasicProduct> list = lambdaQuery().eq(BasicProduct::getDataStatus, BaseConstants.STATUS_0).eq(BasicProduct::getIsDel, BaseConstants.STATUS_0).list();
+        for (BasicProduct mod : list) {
+            redisComp.hSet(BillEnum.BasicProduct.getRedisKey() + mod.getProductParent(), mod.getProductCode(), mod);
         }
     }
 

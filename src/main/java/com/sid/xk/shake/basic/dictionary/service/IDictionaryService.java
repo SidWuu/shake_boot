@@ -57,5 +57,11 @@ public interface IDictionaryService extends IService<BasicDictionary> {
      * @param dataCode 编码
      */
     void delete(String dataType, String dataCode);
-    
+
+    /**
+     * 加入缓存
+     * key: BasicDictionary-data_type-{dataType}, value: List<BasicDictionary>
+     */
+    void loadCache();
+
 }
