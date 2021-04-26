@@ -5,7 +5,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>shake-common</module>
-    </modules>
+		<module>shake-logging</module>
+		<module>shake-system</module>
+	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -14,9 +16,8 @@
 	</parent>
 	<groupId>com.sid.xk</groupId>
 	<artifactId>shake</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>shake</name>
-	<description>Shake project for Spring Boot</description>
+	<version>1.0</version>
+	<name>Shake后台管理</name>
 
 	<properties>
 		<java.version>11</java.version>
