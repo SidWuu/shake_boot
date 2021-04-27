@@ -15,7 +15,7 @@ public class BaseController {
     @Autowired
     private ILogErrorService logErrorService;
 
-    protected void errorLog() {
+    protected void errorLog(Exception e) {
 
     }
 
