@@ -1,6 +1,6 @@
 package com.sid.xk.shake.component;
 
-import com.sid.xk.shake.common.utils.StringUtil;
+import com.sid.xk.shake.utils.StringUtil;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;

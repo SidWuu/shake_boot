@@ -15,11 +15,6 @@
     <dependencies>
         <dependency>
             <groupId>com.sid.xk</groupId>
-            <artifactId>shake-logging</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sid.xk</groupId>
             <artifactId>shake-common</artifactId>
             <version>1.0</version>
         </dependency>
